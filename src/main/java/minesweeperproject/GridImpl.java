@@ -9,7 +9,7 @@ public class GridImpl implements IGrid {
         for (int i = 0; i < rows; i++) {
             grid.add(new ArrayList<>());
             for (int j = 0; j < columns; j++) {
-                grid.get(i).add(new NumberCell());
+                grid.get(i).add(new NumberCell(i, j));
             }
         }
     }
