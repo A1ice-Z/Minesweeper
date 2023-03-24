@@ -8,14 +8,14 @@ import java.util.Random;
 public class Minesweeper {
     private GridImpl grid;
     private int totalMines;
-    private Collection<Cell> Cells = new ArrayList<>();
+    private Collection<NumberCell> Cells = new ArrayList<>();
 
     public Minesweeper(int rows, int columns, int totalMines) {
         this.totalMines = totalMines;
         grid = new GridImpl(rows, columns);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                Cells.add(grid.getElement(i, j));
+                Cells.add((NumberCell) grid.getElement(i, j));
             }
         }
     }
@@ -41,19 +41,15 @@ public class Minesweeper {
     }
 
     public void setNumbers() {
-        for (Cell numberCell : Cells) {
+        for (NumberCell numberCell : Cells) {
             int sum = 0;
             int y = numberCell.getRow();
             int x = numberCell.getColumn();
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
-                    try {
+                    if (y + j < grid.getRowCount() && y + j >= 0 && x + i < grid.getColumnCount() && x + i >= 0)
                         if (grid.getElement(y + j, x + i).display() == -1)
                             sum++;
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
-
                 }
             }
             numberCell.setNumber(sum);
