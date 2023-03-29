@@ -1,4 +1,4 @@
-package minesweeperproject.ui;
+package minesweeperproject;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,9 @@ public class MinesweeperApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Minesweeper");
-        primaryStage.setScene(new Scene(FXMLLoader.load(MinesweeperApp.class.getResource("Minesweeper.fxml"))));
+        primaryStage.setScene(
+                new Scene(
+                        FXMLLoader.load(MinesweeperApp.class.getResource("Minesweeper.fxml"))));
         primaryStage.show();
     }
 
