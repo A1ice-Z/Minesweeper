@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeperproject.MinesweeperEasyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeperproject.MinesweeperGameController">
    <children>
       <GridPane layoutX="1.0" layoutY="95.0" prefHeight="305.0" prefWidth="600.0" AnchorPane.topAnchor="95.0">
         <columnConstraints>
@@ -44,8 +44,6 @@
       <HBox layoutX="2.0" prefHeight="89.0" prefWidth="600.0">
          <children>
             <Button fx:id="backToMenuButton" mnemonicParsing="false" onAction="#backToMenuClicked" text="Meny" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
          </children>
       </HBox>
    </children>
