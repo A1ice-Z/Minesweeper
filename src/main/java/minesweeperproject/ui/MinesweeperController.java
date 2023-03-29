@@ -1,7 +1,9 @@
-package minesweeperproject;
+package minesweeperproject.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import minesweeperproject.game.Minesweeper;
+import minesweeperproject.game.celler.Cell;
 
 public class MinesweeperController {
     @FXML
@@ -13,6 +15,14 @@ public class MinesweeperController {
     private Minesweeper game;
 
     public void initialize() {
+
+    }
+
+    public void updateGame() {
+
+    }
+
+    public void makeGameBox(int row, int column, Cell cell) {
 
     }
 }
