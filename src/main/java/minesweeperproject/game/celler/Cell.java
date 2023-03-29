@@ -28,4 +28,8 @@ public abstract class Cell {
     }
 
     public abstract int display();
+
+    public static void main(String[] args) {
+        System.out.println();
+    }
 }
