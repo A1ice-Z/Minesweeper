@@ -1,9 +1,12 @@
-package minesweeperproject;
+package minesweeperproject.game;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
+
+import minesweeperproject.game.celler.BombCell;
+import minesweeperproject.game.celler.NumberCell;
 
 public class Minesweeper {
     private GridImpl playingGrid;
@@ -17,7 +20,7 @@ public class Minesweeper {
             for (int j = 0; j < columns; j++) {
                 unopenedCells.add((NumberCell) playingGrid.getElement(i, j));
             }
-        }
+         }
     }
 
     //kanskje bytte param til cell
@@ -46,6 +49,7 @@ public class Minesweeper {
             int sum = 0;
             int y = numberCell.getRow();
             int x = numberCell.getColumn();
+                            
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
                     if (y + j < playingGrid.getRowCount() && y + j >= 0 && x + i < playingGrid.getColumnCount() && x + i >= 0)
@@ -54,12 +58,18 @@ public class Minesweeper {
                 }
             }
             numberCell.setNumber(sum);
-        }
-    }
+        } 
+    } 
+            
 
     public void onClick(int row, int column){
         if (playingGrid.getElement(row,column).isFlagged() || playingGrid.getElement(row, column).isOpen()) return;
         
+    }
+
+
+    public void statusGame() {
+
     }
 
     public static void main(String[] args) {

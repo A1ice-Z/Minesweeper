@@ -1,4 +1,4 @@
-package minesweeperproject;
+package minesweeperproject.game.celler;
 
 public class NumberCell extends Cell {
     public NumberCell(int row, int column) {

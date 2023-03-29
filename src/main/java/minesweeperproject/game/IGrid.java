@@ -1,4 +1,6 @@
-package minesweeperproject;
+package minesweeperproject.game;
+
+import minesweeperproject.game.celler.Cell;
 
 public interface IGrid {
 

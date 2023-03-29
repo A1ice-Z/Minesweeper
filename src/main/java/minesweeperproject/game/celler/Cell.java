@@ -1,4 +1,4 @@
-package minesweeperproject;
+package minesweeperproject.game.celler;
 
 public abstract class Cell {
     private boolean open;

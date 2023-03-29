@@ -1,6 +1,9 @@
-package minesweeperproject;
+package minesweeperproject.game;
 
 import java.util.ArrayList;
+
+import minesweeperproject.game.celler.Cell;
+import minesweeperproject.game.celler.NumberCell;
 
 public class GridImpl implements IGrid {
     private ArrayList<ArrayList<Cell>> grid = new ArrayList<>();

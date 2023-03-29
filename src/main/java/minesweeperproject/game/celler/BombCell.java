@@ -1,4 +1,4 @@
-package minesweeperproject;
+package minesweeperproject.game.celler;
 
 public class BombCell extends Cell {
 
