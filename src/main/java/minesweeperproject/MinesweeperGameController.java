@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -21,6 +22,9 @@ import javafx.stage.Stage;
 public class MinesweeperGameController {
     @FXML
     private Button backToMenuButton;
+
+    @FXML
+    private Button newGameButton;
 
     @FXML
     public void backToMenuClicked() throws IOException {
@@ -37,8 +41,18 @@ public class MinesweeperGameController {
     }
 
     @FXML
+    public void newGameClicked() {
+
+    }
+
+    @FXML
     public void onMouseClick(MouseEvent event) {
         System.out.println(event.getButton());
         // finner ut om det er høyre eller venstre click
+        if (event.getButton() == MouseButton.SECONDARY) {
+
+        } else if (event.getButton() == MouseButton.PRIMARY) {
+
+        }
     }
 }
