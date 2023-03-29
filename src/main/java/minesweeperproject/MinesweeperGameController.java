@@ -27,6 +27,26 @@ public class MinesweeperGameController {
     private Button newGameButton;
 
     @FXML
+    private GridPane easyGrid;
+
+    @FXML
+    private GridPane mediumGrid;
+
+    @FXML
+    private GridPane hardGrid;
+
+    public void makeGridButtons(GridPane grid) {
+        int row = grid.getRowCount();
+        int column = grid.getColumnCount();
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                Button button = new Button();
+                grid.add(button, j, i);
+            }
+        }
+    }
+
+    @FXML
     public void backToMenuClicked() throws IOException {
         Stage primaryStage = (Stage) backToMenuButton.getScene().getWindow();
 
