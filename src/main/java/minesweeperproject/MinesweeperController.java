@@ -24,21 +24,36 @@ public class MinesweeperController {
     private Button backToMenuButton, newGameButton;
 
     @FXML
-    private GridPane easyGrid, mediumGrid, hardGrid;
+    private GridPane easyGrid = new GridPane();
+
+    @FXML
+    private GridPane mediumGrid = new GridPane();
+
+    @FXML
+    private GridPane hardGrid = new GridPane();
 
     private Minesweeper game;
 
     public void initialize() {
-
+        makeGridButtons(easyGrid);
+        makeGridButtons(mediumGrid);
+        makeGridButtons(hardGrid);
     }
 
+    @FXML
     public void makeGridButtons(GridPane grid) {
         int row = grid.getRowCount();
         int column = grid.getColumnCount();
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
                 Button button = new Button();
+                button.setMinSize(22, 1);
+                button.setStyle("-fx-border-color: BLACK");
                 grid.add(button, j, i);
+
+                button.setOnAction(b -> {
+                    button.setDisable(true);
+                });
             }
         }
     }
