@@ -20,10 +20,10 @@ public class Minesweeper {
             for (int j = 0; j < columns; j++) {
                 unopenedCells.add((NumberCell) playingGrid.getElement(i, j));
             }
-         }
+        }
     }
 
-    //kanskje bytte param til cell
+    // kanskje bytte param til cell
     public void onFirstClick(int row, int column) {
         unopenedCells.remove(playingGrid.getElement(row, column));
         generateMines(totalMines);
@@ -49,24 +49,24 @@ public class Minesweeper {
             int sum = 0;
             int y = numberCell.getRow();
             int x = numberCell.getColumn();
-                            
+
             for (int i = -1; i < 2; i++) {
                 for (int j = -1; j < 2; j++) {
-                    if (y + j < playingGrid.getRowCount() && y + j >= 0 && x + i < playingGrid.getColumnCount() && x + i >= 0)
+                    if (y + j < playingGrid.getRowCount() && y + j >= 0 && x + i < playingGrid.getColumnCount()
+                            && x + i >= 0)
                         if (playingGrid.getElement(y + j, x + i).display() == -1)
                             sum++;
                 }
             }
             numberCell.setNumber(sum);
-        } 
-    } 
-            
-
-    public void onClick(int row, int column){
-        if (playingGrid.getElement(row,column).isFlagged() || playingGrid.getElement(row, column).isOpen()) return;
-        
+        }
     }
 
+    public void onClick(int row, int column) {
+        if (playingGrid.getElement(row, column).isFlagged() || playingGrid.getElement(row, column).isOpen())
+            return;
+        // primary= venstre click and secondary = høyre click button? sjekke for det
+    }
 
     public void statusGame() {
 

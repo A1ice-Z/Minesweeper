@@ -11,22 +11,22 @@
    <children>
       <VBox alignment="CENTER" layoutX="250.0" layoutY="84.0" prefHeight="200.0" prefWidth="100.0" style="-fx-alignment: center;">
          <children>
-            <Button minWidth="80.0" mnemonicParsing="false" style="-fx-font-weight: bold;" text="Easy">
+            <Button fx:id="easyButton" minWidth="80.0" mnemonicParsing="false" onAction="#easyClicked" style="-fx-font-weight: bold;" text="Easy">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button minWidth="80.0" mnemonicParsing="false" style="-fx-font-weight: bold;" text="Medium">
+            <Button fx:id="mediumButton" minWidth="80.0" mnemonicParsing="false" onAction="#mediumClicked" style="-fx-font-weight: bold;" text="Medium">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button minWidth="80.0" mnemonicParsing="false" style="-fx-font-weight: bold;" text="Hard">
+            <Button fx:id="hardButton" minWidth="80.0" mnemonicParsing="false" onAction="#hardClicked" style="-fx-font-weight: bold;" text="Hard">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button minWidth="80.0" mnemonicParsing="false" style="-fx-font-weight: bold;" text="Custom">
+            <Button fx:id="customButton" minWidth="80.0" mnemonicParsing="false" style="-fx-font-weight: bold;" text="Custom">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
