@@ -10,29 +10,37 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import minesweeperproject.game.Minesweeper;
 
 public class MinesweeperController {
     @FXML
-    private Button easyButton;
+    private Button easyButton, mediumButton, hardButton, customButton;
 
     @FXML
-    private Button mediumButton;
+    private Button backToMenuButton, newGameButton;
 
     @FXML
-    private Button hardButton;
-
-    @FXML
-    private Button customButton;
+    private GridPane easyGrid, mediumGrid, hardGrid;
 
     private Minesweeper game;
 
     public void initialize() {
 
+    }
 
-        makeGridButtons(this.returnEasyGrid());
+    public void makeGridButtons(GridPane grid) {
+        int row = grid.getRowCount();
+        int column = grid.getColumnCount();
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                Button button = new Button();
+                grid.add(button, j, i);
+            }
+        }
     }
 
     private void changeMode(String mode) throws IOException {
@@ -67,6 +75,36 @@ public class MinesweeperController {
     @FXML
     public void hardClicked() throws IOException {
         changeMode("Hard");
+    }
+
+    @FXML
+    public void backToMenuClicked() throws IOException {
+        Stage primaryStage = (Stage) backToMenuButton.getScene().getWindow();
+
+        primaryStage.setTitle("Minesweeper");
+
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("Minesweeper.fxml"));
+        Parent menuPane = menuLoader.load();
+        Scene menuScene = new Scene(menuPane);
+
+        primaryStage.setScene(menuScene);
+        primaryStage.show();
+    }
+
+    @FXML
+    public void newGameClicked() {
+
+    }
+
+    @FXML
+    public void onMouseClick(MouseEvent event) {
+        System.out.println(event.getButton());
+        // finner ut om det er høyre eller venstre click
+        if (event.getButton() == MouseButton.SECONDARY) {
+
+        } else if (event.getButton() == MouseButton.PRIMARY) {
+
+        }
     }
 
     public void updateGame() {

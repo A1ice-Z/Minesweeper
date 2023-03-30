@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeperproject.MinesweeperGameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeperproject.MinesweeperController">
    <children>
       <GridPane fx:id="easyGrid" alignment="BOTTOM_CENTER" gridLinesVisible="true" layoutY="33.0" onMouseClicked="#onMouseClick" prefHeight="367.0" prefWidth="600.0" style="-fx-background-color: white;">
         <columnConstraints>
