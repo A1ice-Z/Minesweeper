@@ -35,6 +35,18 @@ public class MinesweeperGameController {
     @FXML
     private GridPane hardGrid;
 
+    public GridPane returnHardGrid() {
+        return this.hardGrid;
+    }
+
+    public GridPane returnEasyGrid() {
+        return this.easyGrid;
+    }
+
+    public GridPane returnMediumGrid() {
+        return this.mediumGrid;
+    }
+
     public void makeGridButtons(GridPane grid) {
         int row = grid.getRowCount();
         int column = grid.getColumnCount();

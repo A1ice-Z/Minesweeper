@@ -31,6 +31,8 @@ public class MinesweeperController {
 
     public void initialize() {
 
+
+        makeGridButtons(this.returnEasyGrid());
     }
 
     private void changeMode(String mode) throws IOException {
