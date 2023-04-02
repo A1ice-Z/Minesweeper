@@ -52,6 +52,11 @@ public class MinesweeperController {
     }
 
     @FXML
+    // byttet ut knapper med stackpane, som inneholder en pane til
+    // unopened pane er den man skal trykke på. har ikke implementert,
+    // men når man venstre klikker skal den fjernes, høyre klikk setter et bilde med
+    // flagg inn i den.
+    // tallene er i stackpanen
     public void makeGridButtons(GridPane grid, int row, int column) {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
@@ -198,6 +203,7 @@ public class MinesweeperController {
             text.getStyleClass().add("n" + (grid.getElement(rowIndex, columnIndex).display().toString()));
             rowIndex = (columnIndex + 1) == grid.getColumnCount() ? ++rowIndex : rowIndex;
             columnIndex = (columnIndex + 1) == grid.getColumnCount() ? 0 : ++columnIndex;
+            // stackPane.getChildren().add(0, text); med indeks vil tallene bli "gjemt"
             stackPane.getChildren().add(text);
         }
     }
