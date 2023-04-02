@@ -67,7 +67,7 @@ public class MinesweeperController {
         for (int a = 0; a < sides; a++) {
             for (int b = 0; b < sides; b++) {
                 Button button = new Button();
-                button.setPrefSize(100, 100);
+                button.setPrefSize(100, 30);
                 button.setStyle("-fx-border-color: BLACK");
                 grid.add(button, b, a);
 
