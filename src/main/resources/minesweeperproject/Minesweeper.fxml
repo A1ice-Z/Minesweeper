@@ -26,7 +26,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="customButton" minWidth="80.0" mnemonicParsing="false" style="-fx-font-weight: bold;" text="Custom">
+            <Button fx:id="customButton" minWidth="80.0" mnemonicParsing="false" onAction="#customClick" style="-fx-font-weight: bold;" text="Custom">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

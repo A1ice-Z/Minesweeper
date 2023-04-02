@@ -32,12 +32,16 @@ public class MinesweeperController {
     @FXML
     private GridPane hardGrid = new GridPane();
 
+    @FXML
+    private GridPane customGrid = new GridPane();
+
     private Minesweeper game;
 
     public void initialize() {
         makeGridButtons(easyGrid);
         makeGridButtons(mediumGrid);
         makeGridButtons(hardGrid);
+        makeCustomGridButtons(customGrid, 20);
     }
 
     @FXML
@@ -52,6 +56,22 @@ public class MinesweeperController {
                 grid.add(button, j, i);
 
                 button.setOnAction(b -> {
+                    button.setDisable(true);
+                });
+            }
+        }
+    }
+
+    @FXML
+    public void makeCustomGridButtons(GridPane grid, int sides) {
+        for (int a = 0; a < sides; a++) {
+            for (int b = 0; b < sides; b++) {
+                Button button = new Button();
+                button.setPrefSize(100, 100);
+                button.setStyle("-fx-border-color: BLACK");
+                grid.add(button, b, a);
+
+                button.setOnAction(g -> {
                     button.setDisable(true);
                 });
             }
@@ -90,6 +110,22 @@ public class MinesweeperController {
     @FXML
     public void hardClicked() throws IOException {
         changeMode("Hard");
+    }
+
+    @FXML
+    public void customClick() throws IOException {
+        System.out.println("hei");
+        Stage primaryStage = (Stage) customButton.getScene().getWindow();
+
+        primaryStage.setTitle("TeststingFile");
+
+        FXMLLoader modeLoader = new FXMLLoader(getClass().getResource("TeststingFile.fxml"));
+        Parent modePane = modeLoader.load();
+        Scene modeScene = new Scene(modePane);
+
+        primaryStage.setScene(modeScene);
+        primaryStage.show();
+
     }
 
     @FXML
