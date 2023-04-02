@@ -1,8 +1,8 @@
 package minesweeperproject.game.celler;
 
 public abstract class Cell {
-    private boolean open;
-    private boolean flagged;
+    protected boolean open;
+    protected boolean flagged;
     private int row;
     private int column;
 
@@ -27,7 +27,9 @@ public abstract class Cell {
         return column;
     }
 
-    public abstract int display();
+    public abstract Integer display();
+
+    public abstract void open();
 
     public static void main(String[] args) {
         System.out.println();

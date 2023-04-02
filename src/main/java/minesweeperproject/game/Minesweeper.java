@@ -25,18 +25,19 @@ public class Minesweeper {
 
     // kanskje bytte param til cell
     public void onFirstClick(int row, int column) {
-        unopenedCells.remove(playingGrid.getElement(row, column));
-        generateMines(totalMines);
+        playingGrid.getElement(row, column).open();
+        generateMines(totalMines, row, column);
         setNumbers();
+        unopenedCells.remove(playingGrid.getElement(row, column));
     }
 
-    public void generateMines(int totalMines) {
+    public void generateMines(int totalMines, int firstCellRow, int firstCellColumn) {
         HashSet<String> setOfMines = new HashSet<>();
         while (setOfMines.size() != totalMines) {
             int row = new Random().nextInt(playingGrid.getRowCount());
             int column = new Random().nextInt(playingGrid.getColumnCount());
             String cellID = String.format("%d%d", row, column);
-            if (!setOfMines.contains(cellID)) {
+            if (!setOfMines.contains(cellID) && !cellID.equals(String.format("%d%d", firstCellRow, firstCellColumn))) {
                 setOfMines.add(cellID);
                 unopenedCells.remove(playingGrid.getElement(row, column));
                 playingGrid.setElement(row, column, new BombCell(row, column));
@@ -63,9 +64,21 @@ public class Minesweeper {
     }
 
     public void onClick(int row, int column) {
+
         if (playingGrid.getElement(row, column).isFlagged() || playingGrid.getElement(row, column).isOpen())
             return;
+        // if venstreclick
+        if (playingGrid.getElement(row, column).display() == -1) {
+            // bombe
+        } else {
+            playingGrid.getElement(row, column).open();
+            unopenedCells.remove(playingGrid.getElement(row, column));
+        }
         // primary= venstre click and secondary = høyre click button? sjekke for det
+    }
+
+    public GridImpl getPlayingGrid() {
+        return playingGrid;
     }
 
     public void statusGame() {

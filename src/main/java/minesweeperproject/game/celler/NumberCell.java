@@ -12,7 +12,12 @@ public class NumberCell extends Cell {
     }
 
     @Override
-    public int display() {
+    public Integer display() {
         return number;
+    }
+
+    @Override
+    public void open() {
+        this.open = true;
     }
 }
