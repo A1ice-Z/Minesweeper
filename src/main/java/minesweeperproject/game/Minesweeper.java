@@ -13,6 +13,13 @@ public class Minesweeper {
     private int totalMines;
     private Collection<NumberCell> unopenedCells = new ArrayList<>();
 
+    /**
+     * Creates a new Minesweeper game
+     * 
+     * @param rows       The amount of rows this games grid has
+     * @param columns    The amount of columns this games grid has
+     * @param totalMines The amount of bombs there exists in the grid
+     */
     public Minesweeper(int rows, int columns, int totalMines) {
         this.totalMines = totalMines;
         playingGrid = new GridImpl(rows, columns);
@@ -23,6 +30,9 @@ public class Minesweeper {
         }
     }
 
+    /**
+     * Jeg skjønner ikke helt hva denne gjør
+     */
     // kanskje bytte param til cell
     public void onFirstClick(int row, int column) {
         playingGrid.getElement(row, column).open();
@@ -31,6 +41,15 @@ public class Minesweeper {
         unopenedCells.remove(playingGrid.getElement(row, column));
     }
 
+    /**
+     * Distributes the amount of bombs a game has randomly on the games grid
+     * 
+     * @param totalMines      The amount of bombs there exists in the grid
+     * @param firstCellRow    The x cordinates to the first cell that is clicked on
+     *                        when the game starts
+     * @param firstCellColumn The y cordinates to the first cell that is clicked on
+     *                        when the game starts
+     */
     public void generateMines(int totalMines, int firstCellRow, int firstCellColumn) {
         HashSet<String> setOfMines = new HashSet<>();
         while (setOfMines.size() != totalMines) {
@@ -45,6 +64,9 @@ public class Minesweeper {
         }
     }
 
+    /**
+     * 
+     */
     public void setNumbers() {
         for (NumberCell numberCell : unopenedCells) {
             int sum = 0;

@@ -90,6 +90,7 @@ public class MinesweeperController {
             }
         }
     }
+    // for å lage custom brett
 
     public void setGame(String mode) {
         if (mode.equals("Easy")) {
@@ -153,6 +154,7 @@ public class MinesweeperController {
         primaryStage.show();
 
     }
+    // for custom brett
 
     @FXML
     public void backToMenuClicked() throws IOException {
