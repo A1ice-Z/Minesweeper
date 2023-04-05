@@ -58,9 +58,16 @@ public abstract class Cell {
         return column;
     }
 
-    // usikker på hvordan man skriver javadoc til abstrakte klasser
+    /**
+     * Returns the value of the cell --> usikker på om dette er riktig def
+     * 
+     * @return Integer
+     */
     public abstract Integer display();
 
+    /**
+     * Opens up the cell that is clicked
+     */
     public abstract void open();
 
     public static void main(String[] args) {

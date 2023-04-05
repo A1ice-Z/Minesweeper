@@ -8,6 +8,10 @@ import java.util.Random;
 import minesweeperproject.game.celler.BombCell;
 import minesweeperproject.game.celler.NumberCell;
 
+/**
+ * Minesweeper game logic
+ */
+
 public class Minesweeper {
     private GridImpl playingGrid;
     private int totalMines;
@@ -65,7 +69,9 @@ public class Minesweeper {
     }
 
     /**
-     * 
+     * Iterates through all the cells in the grid that is not a bombcell, and
+     * generates the cells numbers based on the amount of bombs there is around the
+     * cell
      */
     public void setNumbers() {
         for (NumberCell numberCell : unopenedCells) {
@@ -85,6 +91,13 @@ public class Minesweeper {
         }
     }
 
+    /**
+     * First it checks the status of the cell, and based on that it checkes
+     * if the cell is a bombcell
+     * 
+     * @param row    The x cordinate for the cell
+     * @param column The y cordinate for the cell
+     */
     public void onClick(int row, int column) {
 
         if (playingGrid.getElement(row, column).isFlagged() || playingGrid.getElement(row, column).isOpen())
@@ -99,6 +112,11 @@ public class Minesweeper {
         // primary= venstre click and secondary = høyre click button? sjekke for det
     }
 
+    /**
+     * Return the current Minesweeper games grid
+     * 
+     * @return The current Minesweeper games grid
+     */
     public GridImpl getPlayingGrid() {
         return playingGrid;
     }
