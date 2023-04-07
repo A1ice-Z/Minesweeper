@@ -12,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -171,11 +173,22 @@ public class MinesweeperController {
     public void onMouseClick(MouseEvent event, GridPane grid, Node node) {
         Integer rowIndex = GridPane.getRowIndex(node);
         Integer colIndex = GridPane.getColumnIndex(node);
+        GridImpl gameGrid = game.getPlayingGrid();
+        StackPane stackPane = (StackPane) node;
         System.out.println(event.getButton());
         // finner ut om det er høyre eller venstre click
         if (event.getButton() == MouseButton.SECONDARY) {
-            if (clickCount == 0) {
+            if (clickCount == 0 || gameGrid.getElement(rowIndex, colIndex).isOpen()) {
                 return;
+            }
+            if (!gameGrid.getElement(rowIndex, colIndex).isFlagged()) {
+                Image flagImage = new Image(getClass().getResource("flag.png").toExternalForm(), 30, 30, false, true);
+                ImageView imageView = new ImageView(flagImage);
+                stackPane.getChildren().add(imageView);
+                gameGrid.getElement(rowIndex, colIndex).setFlagged(true);
+            } else {
+                stackPane.getChildren().remove(2);
+                gameGrid.getElement(rowIndex, colIndex).setFlagged(false);
             }
         } else if (event.getButton() == MouseButton.PRIMARY) {
             if (clickCount == 0) {

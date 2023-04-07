@@ -40,6 +40,10 @@ public abstract class Cell {
         return flagged;
     }
 
+    public void setFlagged(boolean flagged) {
+        this.flagged = flagged;
+    }
+
     /**
      * Returns the cells row
      * 

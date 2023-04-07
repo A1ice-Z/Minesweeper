@@ -108,6 +108,7 @@ public class Minesweeper {
             return;
         // if venstreclick
         if (clickedCell.display() == -1) {
+            System.out.println("bang");
             // bombe
         } else {
             clickedCell.open();
@@ -119,7 +120,6 @@ public class Minesweeper {
                                 && column + i < playingGrid.getColumnCount()
                                 && column + i >= 0)
                             onClick(row + j, column + i);
-
                     }
                 }
             }
