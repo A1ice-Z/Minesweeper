@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 import minesweeperproject.game.celler.BombCell;
+import minesweeperproject.game.celler.Cell;
 import minesweeperproject.game.celler.NumberCell;
 
 /**
@@ -35,14 +36,16 @@ public class Minesweeper {
     }
 
     /**
-     * Jeg skjønner ikke helt hva denne gjør
+     * On the players first click the board will be generated
+     * 
+     * @param row    The row of the cell the player clicked
+     * @param column The column of the cell the player clicked
      */
-    // kanskje bytte param til cell
     public void onFirstClick(int row, int column) {
-        playingGrid.getElement(row, column).open();
         generateMines(totalMines, row, column);
         setNumbers();
         unopenedCells.remove(playingGrid.getElement(row, column));
+        onClick(row, column);
     }
 
     /**
@@ -99,15 +102,27 @@ public class Minesweeper {
      * @param column The y cordinate for the cell
      */
     public void onClick(int row, int column) {
+        Cell clickedCell = playingGrid.getElement(row, column);
 
-        if (playingGrid.getElement(row, column).isFlagged() || playingGrid.getElement(row, column).isOpen())
+        if (clickedCell.isFlagged() || clickedCell.isOpen())
             return;
         // if venstreclick
-        if (playingGrid.getElement(row, column).display() == -1) {
+        if (clickedCell.display() == -1) {
             // bombe
         } else {
-            playingGrid.getElement(row, column).open();
-            unopenedCells.remove(playingGrid.getElement(row, column));
+            clickedCell.open();
+            unopenedCells.remove(clickedCell);
+            if (clickedCell.display() == 0) {
+                for (int i = -1; i < 2; i++) {
+                    for (int j = -1; j < 2; j++) {
+                        if (row + j < playingGrid.getRowCount() && row + j >= 0
+                                && column + i < playingGrid.getColumnCount()
+                                && column + i >= 0)
+                            onClick(row + j, column + i);
+
+                    }
+                }
+            }
         }
         // primary= venstre click and secondary = høyre click button? sjekke for det
     }

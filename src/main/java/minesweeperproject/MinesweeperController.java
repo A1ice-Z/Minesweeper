@@ -52,11 +52,6 @@ public class MinesweeperController {
     }
 
     @FXML
-    // byttet ut knapper med stackpane, som inneholder en pane til
-    // unopened pane er den man skal trykke på. har ikke implementert,
-    // men når man venstre klikker skal den fjernes, høyre klikk setter et bilde med
-    // flagg inn i den.
-    // tallene er i stackpanen
     public void makeGridButtons(GridPane grid, int row, int column) {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < column; j++) {
@@ -90,7 +85,6 @@ public class MinesweeperController {
             }
         }
     }
-    // for å lage custom brett
 
     public void setGame(String mode) {
         if (mode.equals("Easy")) {
@@ -154,7 +148,6 @@ public class MinesweeperController {
         primaryStage.show();
 
     }
-    // for custom brett
 
     @FXML
     public void backToMenuClicked() throws IOException {
@@ -190,8 +183,10 @@ public class MinesweeperController {
                 game.onFirstClick(rowIndex, colIndex);
                 clickCount++;
                 makeGame(grid);
+            } else {
+                game.onClick(rowIndex, colIndex);
             }
-
+            updateGame(grid);
         }
     }
 
@@ -205,9 +200,24 @@ public class MinesweeperController {
             text.getStyleClass().add("n" + (grid.getElement(rowIndex, columnIndex).display().toString()));
             rowIndex = (columnIndex + 1) == grid.getColumnCount() ? ++rowIndex : rowIndex;
             columnIndex = (columnIndex + 1) == grid.getColumnCount() ? 0 : ++columnIndex;
-            // stackPane.getChildren().add(0, text); med indeks vil tallene bli "gjemt"
-            stackPane.getChildren().add(text);
+            // med indeks vil tallene bli "gjemt"
+            stackPane.getChildren().add(0, text);
+            // stackPane.getChildren().add(text);
         }
     }
 
+    // mulig å slå denne sammen med makegame kanskje
+    public void updateGame(GridPane gridPane) {
+        int rowIndex = 0;
+        int columnIndex = 0;
+        GridImpl currentGrid = game.getPlayingGrid();
+        for (Node node : gridPane.getChildren()) {
+            StackPane stackPane = (StackPane) node;
+            if (currentGrid.getElement(rowIndex, columnIndex).isOpen() && stackPane.getChildren().size() == 2) {
+                stackPane.getChildren().remove(1);
+            }
+            rowIndex = (columnIndex + 1) == currentGrid.getColumnCount() ? ++rowIndex : rowIndex;
+            columnIndex = (columnIndex + 1) == currentGrid.getColumnCount() ? 0 : ++columnIndex;
+        }
+    }
 }
