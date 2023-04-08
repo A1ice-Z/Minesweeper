@@ -26,7 +26,7 @@ import minesweeperproject.game.Minesweeper;
 
 public class MinesweeperController {
     @FXML
-    private Button easyButton, mediumButton, hardButton, customButton;
+    private Button easyButton, mediumButton, hardButton;
 
     @FXML
     private Button backToMenuButton, newGameButton;
@@ -40,9 +40,6 @@ public class MinesweeperController {
     @FXML
     private GridPane hardGrid = new GridPane();
 
-    @FXML
-    private GridPane customGrid = new GridPane();
-
     private static Minesweeper game;
     private int clickCount;
 
@@ -50,7 +47,6 @@ public class MinesweeperController {
         makeGridButtons(easyGrid, 9, 9);
         makeGridButtons(mediumGrid, 16, 16);
         makeGridButtons(hardGrid, 16, 30);
-        makeCustomGridButtons(customGrid, 20);
     }
 
     @FXML
@@ -67,22 +63,6 @@ public class MinesweeperController {
                 stackPane.getChildren().add(unopenedPane);
                 unopenedPane.setOnMouseClicked(event -> {
                     onMouseClick(event, grid, stackPane);
-                });
-            }
-        }
-    }
-
-    @FXML
-    public void makeCustomGridButtons(GridPane grid, int sides) {
-        for (int a = 0; a < sides; a++) {
-            for (int b = 0; b < sides; b++) {
-                Button button = new Button();
-                button.setPrefSize(100, 30);
-                button.setStyle("-fx-border-color: BLACK");
-                grid.add(button, b, a);
-
-                button.setOnAction(g -> {
-                    button.setDisable(true);
                 });
             }
         }
@@ -136,22 +116,6 @@ public class MinesweeperController {
     }
 
     @FXML
-    public void customClick() throws IOException {
-        System.out.println("hei");
-        Stage primaryStage = (Stage) customButton.getScene().getWindow();
-
-        primaryStage.setTitle("TeststingFile");
-
-        FXMLLoader modeLoader = new FXMLLoader(getClass().getResource("TeststingFile.fxml"));
-        Parent modePane = modeLoader.load();
-        Scene modeScene = new Scene(modePane);
-
-        primaryStage.setScene(modeScene);
-        primaryStage.show();
-
-    }
-
-    @FXML
     public void backToMenuClicked() throws IOException {
         Stage primaryStage = (Stage) backToMenuButton.getScene().getWindow();
 
@@ -196,7 +160,6 @@ public class MinesweeperController {
             }
         } else if (event.getButton() == MouseButton.PRIMARY) {
             if (clickCount == 0) {
-                System.out.println(game);
                 game.onFirstClick(rowIndex, colIndex);
                 clickCount++;
                 makeGame(grid);
