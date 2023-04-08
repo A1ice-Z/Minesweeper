@@ -1,8 +1,11 @@
 package minesweeperproject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javafx.fxml.FXML;
@@ -41,6 +44,8 @@ public class MinesweeperController {
     private GridPane hardGrid = new GridPane();
 
     private static Minesweeper game;
+    private List<StackPane> bombs = new ArrayList<StackPane>();
+    private List<StackPane> falseFlags = new ArrayList<StackPane>();
     private int clickCount;
 
     public void initialize() {
@@ -135,6 +140,8 @@ public class MinesweeperController {
     }
 
     public void onMouseClick(MouseEvent event, GridPane grid, Node node) {
+        if (game.isGameLost())
+            return;
         Integer rowIndex = GridPane.getRowIndex(node);
         Integer colIndex = GridPane.getColumnIndex(node);
         GridImpl gameGrid = game.getPlayingGrid();
@@ -153,8 +160,12 @@ public class MinesweeperController {
                 });
                 stackPane.getChildren().add(imageView);
                 gameGrid.getElement(rowIndex, colIndex).setFlagged(true);
-            } else {
+                if (!bombs.contains(stackPane))
+                    falseFlags.add(stackPane);
 
+            } else {
+                if (falseFlags.contains(stackPane))
+                    falseFlags.remove(stackPane);
                 stackPane.getChildren().remove(2);
                 gameGrid.getElement(rowIndex, colIndex).setFlagged(false);
             }
@@ -166,7 +177,7 @@ public class MinesweeperController {
             } else {
                 game.onClick(rowIndex, colIndex);
             }
-            if (game.isGameLost()){
+            if (game.isGameLost()) {
                 gameOver(rowIndex, colIndex, grid);
             }
             updateGame(grid);
@@ -174,25 +185,39 @@ public class MinesweeperController {
         }
     }
 
-    public void gameOver(int row, int column, GridPane gridPane){
-        
+    public void gameOver(int row, int column, GridPane gridPane) {
+        gridPane.getChildren().get(row * gridPane.getColumnCount() + column).setStyle("-fx-background-color: RED");
+        ;
+        for (StackPane bomb : bombs) {
+            if (bomb.getChildren().size() != 3)
+                bomb.getChildren().remove(1);
+        }
+        for (StackPane falseFlag : falseFlags) {
+            falseFlag.getChildren().remove(0, 3);
+            Image bombImage = new Image(getClass().getResource("bomb.png").toExternalForm(), 30, 30, false,
+                    true);
+            ImageView imageView = new ImageView(bombImage);
+            Image xImage = new Image(getClass().getResource("X.png").toExternalForm(), 30, 30, false,
+                    true);
+            ImageView imageView2 = new ImageView(xImage);
+            falseFlag.getChildren().add(imageView);
+            falseFlag.getChildren().add(imageView2);
+        }
     }
 
     public void checkWin(GridPane gridPane) {
         if (game.getUnopenedCells().isEmpty()) {
             int rowIndex = 0;
             int columnIndex = 0;
-            GridImpl grid = game.getPlayingGrid();
-            for (Node node : gridPane.getChildren()) {
-                StackPane stackPane = (StackPane) node;
-                if (grid.getElement(rowIndex, columnIndex).display() == -1 && stackPane.getChildren().size() != 3) {
+            for (StackPane bomb : bombs) {
+                if (bomb.getChildren().size() != 3) {
                     Image flagImage = new Image(getClass().getResource("flag.png").toExternalForm(), 30, 30, false,
                             true);
                     ImageView imageView = new ImageView(flagImage);
-                    stackPane.getChildren().add(imageView);
+                    bomb.getChildren().add(imageView);
                 }
-                rowIndex = (columnIndex + 1) == grid.getColumnCount() ? ++rowIndex : rowIndex;
-                columnIndex = (columnIndex + 1) == grid.getColumnCount() ? 0 : ++columnIndex;
+                rowIndex = (columnIndex + 1) == gridPane.getColumnCount() ? ++rowIndex : rowIndex;
+                columnIndex = (columnIndex + 1) == gridPane.getColumnCount() ? 0 : ++columnIndex;
             }
         }
     }
@@ -205,11 +230,17 @@ public class MinesweeperController {
             StackPane stackPane = (StackPane) node;
             Text text = new Text((grid.getElement(rowIndex, columnIndex).display().toString()));
             text.getStyleClass().add("n" + (grid.getElement(rowIndex, columnIndex).display().toString()));
+            if (grid.getElement(rowIndex, columnIndex).display() == -1) {
+                bombs.add(stackPane);
+                Image bombImage = new Image(getClass().getResource("bomb.png").toExternalForm(), 30, 30, false,
+                        true);
+                ImageView imageView = new ImageView(bombImage);
+                stackPane.getChildren().add(0, imageView);
+            } else
+                stackPane.getChildren().add(0, text);
+
             rowIndex = (columnIndex + 1) == grid.getColumnCount() ? ++rowIndex : rowIndex;
             columnIndex = (columnIndex + 1) == grid.getColumnCount() ? 0 : ++columnIndex;
-            // med indeks vil tallene bli "gjemt"
-            stackPane.getChildren().add(0, text);
-            // stackPane.getChildren().add(text);
         }
     }
 

@@ -110,6 +110,7 @@ public class Minesweeper {
             return;
         // if venstreclick
         if (clickedCell.display() == -1) {
+            System.out.println("bruh");
             gameLost = true;
         } else {
             clickedCell.open();
