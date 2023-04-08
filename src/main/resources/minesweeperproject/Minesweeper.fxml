@@ -26,11 +26,6 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="customButton" minWidth="80.0" mnemonicParsing="false" onAction="#customClick" style="-fx-font-weight: bold;" text="Custom">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Button>
          </children>
       </VBox>
       <Text layoutX="214.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: &quot;Lucida Console&quot;;" text="Minesweeper" wrappingWidth="173.0">
