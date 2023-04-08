@@ -184,9 +184,13 @@ public class MinesweeperController {
             if (!gameGrid.getElement(rowIndex, colIndex).isFlagged()) {
                 Image flagImage = new Image(getClass().getResource("flag.png").toExternalForm(), 30, 30, false, true);
                 ImageView imageView = new ImageView(flagImage);
+                imageView.setOnMouseClicked(click -> {
+                    onMouseClick(click, grid, stackPane);
+                });
                 stackPane.getChildren().add(imageView);
                 gameGrid.getElement(rowIndex, colIndex).setFlagged(true);
             } else {
+
                 stackPane.getChildren().remove(2);
                 gameGrid.getElement(rowIndex, colIndex).setFlagged(false);
             }
@@ -199,9 +203,16 @@ public class MinesweeperController {
             } else {
                 game.onClick(rowIndex, colIndex);
             }
+            if (game.isGameLost()){
+                gameOver(rowIndex, colIndex, grid);
+            }
             updateGame(grid);
             checkWin(grid);
         }
+    }
+
+    public void gameOver(int row, int column, GridPane gridPane){
+        
     }
 
     public void checkWin(GridPane gridPane) {

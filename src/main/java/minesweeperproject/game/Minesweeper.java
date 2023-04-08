@@ -18,6 +18,7 @@ public class Minesweeper {
     private GridImpl playingGrid;
     private int totalMines;
     private Collection<NumberCell> unopenedCells = new ArrayList<>();
+    private boolean gameLost = false;
 
     /**
      * Creates a new Minesweeper game
@@ -109,8 +110,7 @@ public class Minesweeper {
             return;
         // if venstreclick
         if (clickedCell.display() == -1) {
-            System.out.println("bang");
-            // bombe
+            gameLost = true;
         } else {
             clickedCell.open();
             unopenedCells.remove(clickedCell);
@@ -141,8 +141,8 @@ public class Minesweeper {
         return playingGrid;
     }
 
-    public void statusGame() {
-
+    public boolean isGameLost() {
+        return gameLost;
     }
 
     public static void main(String[] args) {
