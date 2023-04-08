@@ -3,6 +3,7 @@ package minesweeperproject.game;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 import minesweeperproject.game.celler.BombCell;
@@ -125,6 +126,10 @@ public class Minesweeper {
             }
         }
         // primary= venstre click and secondary = høyre click button? sjekke for det
+    }
+
+    public Collection<NumberCell> getUnopenedCells() {
+        return unopenedCells;
     }
 
     /**

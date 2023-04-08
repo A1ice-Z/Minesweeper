@@ -200,6 +200,26 @@ public class MinesweeperController {
                 game.onClick(rowIndex, colIndex);
             }
             updateGame(grid);
+            checkWin(grid);
+        }
+    }
+
+    public void checkWin(GridPane gridPane) {
+        if (game.getUnopenedCells().isEmpty()) {
+            int rowIndex = 0;
+            int columnIndex = 0;
+            GridImpl grid = game.getPlayingGrid();
+            for (Node node : gridPane.getChildren()) {
+                StackPane stackPane = (StackPane) node;
+                if (grid.getElement(rowIndex, columnIndex).display() == -1 && stackPane.getChildren().size() != 3) {
+                    Image flagImage = new Image(getClass().getResource("flag.png").toExternalForm(), 30, 30, false,
+                            true);
+                    ImageView imageView = new ImageView(flagImage);
+                    stackPane.getChildren().add(imageView);
+                }
+                rowIndex = (columnIndex + 1) == grid.getColumnCount() ? ++rowIndex : rowIndex;
+                columnIndex = (columnIndex + 1) == grid.getColumnCount() ? 0 : ++columnIndex;
+            }
         }
     }
 
