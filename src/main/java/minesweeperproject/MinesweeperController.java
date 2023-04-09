@@ -135,8 +135,19 @@ public class MinesweeperController {
     }
 
     @FXML
-    public void newGameClicked() {
-
+    public void newGameClicked() throws IOException {
+        makeNewGame(easyGrid);
+    }
+    public void makeNewGame(GridPane grid){
+        bombs = new ArrayList<StackPane>();
+        falseFlags = new ArrayList<StackPane>();
+        clickCount = 0;
+        System.out.println(easyGrid.getChildren());
+        easyGrid.getChildren().clear();
+        System.out.println(easyGrid.getChildren());
+        makeGridButtons(easyGrid, 9, 9);
+        System.out.println(easyGrid.getChildren());
+        setGame("Easy");
     }
 
     public void onMouseClick(MouseEvent event, GridPane grid, Node node) {
