@@ -142,6 +142,11 @@ public class Minesweeper {
         return playingGrid;
     }
 
+    /**
+     * Return the current Minesweeper games status
+     * 
+     * @return The current Minesweeper games status
+     */
     public boolean isGameLost() {
         return gameLost;
     }
