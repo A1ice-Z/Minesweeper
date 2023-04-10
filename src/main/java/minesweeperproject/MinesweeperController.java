@@ -258,7 +258,6 @@ public class MinesweeperController {
         if (game.getUnopenedCells().isEmpty()) {
             timer.stop();
             recordTime = timer.getTime();
-            recordTimeline = timer.getMinesweeperTimeline();
             int rowIndex = 0;
             int columnIndex = 0;
             for (StackPane bomb : bombs) {
