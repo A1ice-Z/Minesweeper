@@ -44,4 +44,8 @@ public class MinesweeperTimer extends HBox {
     public int getTime() {
         return time;
     }
+
+    public Timeline getMinesweeperTimeline() {
+        return minesweeperTimeline;
+    }
 }
