@@ -73,7 +73,6 @@ public class MinesweeperController {
 
     private MinesweeperTimer timer = new MinesweeperTimer();
     private int recordTime;
-    private Timeline recordTimeline;
 
     private static Minesweeper game;
     private List<StackPane> bombs = new ArrayList<StackPane>();
@@ -173,7 +172,8 @@ public class MinesweeperController {
     public void newGameClicked() throws IOException {
         makeNewGame(easyGrid);
     }
-    public void makeNewGame(GridPane grid){
+
+    public void makeNewGame(GridPane grid) {
         bombs = new ArrayList<StackPane>();
         falseFlags = new ArrayList<StackPane>();
         clickCount = 0;
@@ -284,7 +284,6 @@ public class MinesweeperController {
         winningScoreBox.setDisable(false);
         spillerNavnTekst.getChildren().add(new Label("Skriv inn brukernavnet ditt under: "));
         spillerTid.getChildren().add(new Label("Tid: " + recordTime + " sekunder"));
-
     }
 
     public void makeGame(GridPane gridPane) {
