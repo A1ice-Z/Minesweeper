@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -16,6 +17,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -24,6 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import minesweeperproject.game.GridImpl;
@@ -47,9 +51,29 @@ public class MinesweeperController {
     private GridPane hardGrid = new GridPane();
 
     @FXML
+    private HBox navBarBox = new HBox();
+
+    @FXML
     private HBox timerBox = new HBox();
 
+    @FXML
+    private VBox winningScoreBox = new VBox();
+
+    @FXML
+    private Button lagreSpillerButton;
+
+    @FXML
+    private TextField spillerNavn = new TextField();
+
+    @FXML
+    private Pane spillerTid = new Pane();
+
+    @FXML
+    private Pane spillerNavnTekst = new Pane();
+
     private MinesweeperTimer timer = new MinesweeperTimer();
+    private int recordTime;
+    private Timeline recordTimeline;
 
     private static Minesweeper game;
     private List<StackPane> bombs = new ArrayList<StackPane>();
@@ -222,6 +246,8 @@ public class MinesweeperController {
     public void checkWin(GridPane gridPane) {
         if (game.getUnopenedCells().isEmpty()) {
             timer.stop();
+            recordTime = timer.getTime();
+            recordTimeline = timer.getMinesweeperTimeline();
             int rowIndex = 0;
             int columnIndex = 0;
             for (StackPane bomb : bombs) {
@@ -234,7 +260,20 @@ public class MinesweeperController {
                 rowIndex = (columnIndex + 1) == gridPane.getColumnCount() ? ++rowIndex : rowIndex;
                 columnIndex = (columnIndex + 1) == gridPane.getColumnCount() ? 0 : ++columnIndex;
             }
+
+            setRecordTime(recordTime);
         }
+    }
+
+    private void setRecordTime(int recordTime) {
+        easyGrid.setVisible(false);
+        navBarBox.setVisible(false);
+        timerBox.setVisible(false);
+        winningScoreBox.setVisible(true);
+        winningScoreBox.setDisable(false);
+        spillerNavnTekst.getChildren().add(new Label("Skriv inn brukernavnet ditt under: "));
+        spillerTid.getChildren().add(new Label("Tid: " + recordTime + " sekunder"));
+
     }
 
     public void makeGame(GridPane gridPane) {
