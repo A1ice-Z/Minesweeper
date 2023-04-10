@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.print.Collation;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -20,12 +21,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import minesweeperproject.game.GridImpl;
 import minesweeperproject.game.Minesweeper;
+import minesweeperproject.game.MinesweeperTimer;
 
 public class MinesweeperController {
     @FXML
@@ -43,6 +46,11 @@ public class MinesweeperController {
     @FXML
     private GridPane hardGrid = new GridPane();
 
+    @FXML
+    private HBox timerBox = new HBox();
+
+    private MinesweeperTimer timer = new MinesweeperTimer();
+
     private static Minesweeper game;
     private List<StackPane> bombs = new ArrayList<StackPane>();
     private List<StackPane> falseFlags = new ArrayList<StackPane>();
@@ -52,6 +60,9 @@ public class MinesweeperController {
         makeGridButtons(easyGrid, 9, 9);
         makeGridButtons(mediumGrid, 16, 16);
         makeGridButtons(hardGrid, 16, 30);
+
+        timer.setAlignment(Pos.CENTER_RIGHT);
+        timerBox.getChildren().add(timer);
     }
 
     @FXML
@@ -174,6 +185,7 @@ public class MinesweeperController {
                 game.onFirstClick(rowIndex, colIndex);
                 clickCount++;
                 makeGame(grid);
+                timer.start();
             } else {
                 game.onClick(rowIndex, colIndex);
             }
@@ -186,6 +198,8 @@ public class MinesweeperController {
     }
 
     public void gameOver(int row, int column, GridPane gridPane) {
+        timer.reset();
+        timer.stop();
         gridPane.getChildren().get(row * gridPane.getColumnCount() + column).setStyle("-fx-background-color: RED");
         ;
         for (StackPane bomb : bombs) {
@@ -207,6 +221,7 @@ public class MinesweeperController {
 
     public void checkWin(GridPane gridPane) {
         if (game.getUnopenedCells().isEmpty()) {
+            timer.stop();
             int rowIndex = 0;
             int columnIndex = 0;
             for (StackPane bomb : bombs) {

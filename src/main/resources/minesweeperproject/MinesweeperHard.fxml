@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeperproject.MinesweeperController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeperproject.MinesweeperController">
    <children>
-      <HBox prefHeight="89.0" prefWidth="600.0">
+      <HBox prefHeight="32.0" prefWidth="127.0">
          <children>
             <Button fx:id="backToMenuButton" mnemonicParsing="false" onAction="#backToMenuClicked" text="Meny" />
+            <Button mnemonicParsing="false" text="Nytt Spill">
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Button>
          </children>
+         <padding>
+            <Insets left="2.0" />
+         </padding>
       </HBox>
       <GridPane fx:id="hardGrid" alignment="BOTTOM_CENTER" layoutY="33.0" prefHeight="368.0" prefWidth="600.0" style="-fx-background-color: white;">
       </GridPane>
+      <HBox fx:id="timerBox" layoutX="344.0" layoutY="-3.0" prefHeight="38.0" prefWidth="257.0" />
    </children>
 </AnchorPane>
