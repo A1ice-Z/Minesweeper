@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeperproject.MinesweeperController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeperproject.MinesweeperController">
    <children>
       <GridPane fx:id="easyGrid" alignment="BOTTOM_CENTER" layoutX="58.0" layoutY="45.0" prefHeight="280.65" prefWidth="484.6" style="-fx-background-color: white;">
       </GridPane>
@@ -32,27 +32,32 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </padding>
       </HBox>
-      <VBox fx:id="winningScoreBox" alignment="CENTER" disable="true" layoutY="-2.0" prefHeight="329.0" prefWidth="600.0" visible="false">
+      <VBox fx:id="winningScoreBox" alignment="CENTER" disable="true" layoutX="-2.0" layoutY="-3.0" prefHeight="606.0" prefWidth="607.0" visible="false">
          <children>
             <Pane fx:id="spillerNavnTekst" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" />
             <TextField fx:id="spillerNavn" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0">
                <VBox.margin>
-                  <Insets left="40.0" right="40.0" top="40.0" />
+                  <Insets left="40.0" right="40.0" top="2.0" />
                </VBox.margin>
             </TextField>
             <Pane fx:id="spillerTid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0">
                <VBox.margin>
-                  <Insets left="40.0" right="40.0" top="20.0" />
+                  <Insets left="40.0" right="40.0" top="10.0" />
                </VBox.margin>
             </Pane>
-            <Button fx:id="lagreSpillerButton" mnemonicParsing="false" text="Lagre Spiller" textAlignment="CENTER">
+            <Button fx:id="lagreSpillerButton" mnemonicParsing="false" onAction="#addLeaderBoardScore" text="Lagre Spiller" textAlignment="CENTER">
                <VBox.margin>
-                  <Insets top="20.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
+            <Pane fx:id="leaderBoardTekst" prefHeight="47.0" prefWidth="548.0">
+               <VBox.margin>
+                  <Insets left="2.0" right="2.0" top="20.0" />
+               </VBox.margin>
+            </Pane>
          </children>
       </VBox>
    </children>

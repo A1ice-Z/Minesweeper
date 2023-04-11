@@ -8,10 +8,9 @@ public class MinesweeperLeaderBoard {
 
     public MinesweeperLeaderBoard() {
         this.minesweeperLeaderBoard = new ArrayList<>(maxSize);
-
     }
 
-    public ArrayList<Integer> getHighscoreList() {
+    public ArrayList<Integer> getMinesweeperLeaderBoard() {
         return minesweeperLeaderBoard;
     }
 
@@ -51,5 +50,4 @@ public class MinesweeperLeaderBoard {
             index = minesweeperLeaderBoard.size() - 1;
         }
     }
-
 }
