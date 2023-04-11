@@ -15,7 +15,7 @@
       <HBox prefHeight="32.0" prefWidth="127.0">
          <children>
             <Button fx:id="backToMenuButton" mnemonicParsing="false" onAction="#backToMenuClicked" text="Meny" />
-            <Button mnemonicParsing="false" text="Nytt Spill">
+            <Button mnemonicParsing="false" text="Nytt Spill" onAction="#newHardGameClicked">
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
