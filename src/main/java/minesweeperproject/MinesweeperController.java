@@ -188,9 +188,7 @@ public class MinesweeperController {
         falseFlags = new ArrayList<StackPane>();
         clickCount = 0;
         int gameID = grid.getColumnCount();
-        System.out.println(gameID);
         grid.getChildren().clear();
-        System.out.println(gameID);
         if (gameID == 9) {
             makeGridButtons(grid, 9, 9);
             setGame("Easy");
