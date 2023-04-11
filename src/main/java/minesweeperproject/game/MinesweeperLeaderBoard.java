@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class MinesweeperLeaderBoard {
     ArrayList<Integer> minesweeperLeaderBoard;
     private final int maxSize = 20;
+    private int index;
 
     public MinesweeperLeaderBoard() {
         this.minesweeperLeaderBoard = new ArrayList<>(maxSize);
@@ -23,7 +24,7 @@ public class MinesweeperLeaderBoard {
     }
 
     public void addResult(int result) {
-        int index = 0;
+        index = -1;
         int tempSize = minesweeperLeaderBoard.size();
 
         if (minesweeperLeaderBoard.size() == maxSize) {
@@ -49,5 +50,9 @@ public class MinesweeperLeaderBoard {
             minesweeperLeaderBoard.add(result);
             index = minesweeperLeaderBoard.size() - 1;
         }
+    }
+
+    public int getIndex() {
+        return index;
     }
 }
