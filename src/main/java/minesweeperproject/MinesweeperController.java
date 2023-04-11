@@ -86,7 +86,6 @@ public class MinesweeperController {
     private MinesweeperTimer timer = new MinesweeperTimer();
     private int recordTime;
     private MinesweeperLeaderBoard leaderBoard = new MinesweeperLeaderBoard();
-    private ListView leaderBoardBox = new ListView<>();
 
     private static Minesweeper game;
     private List<StackPane> bombs = new ArrayList<StackPane>();
@@ -205,12 +204,19 @@ public class MinesweeperController {
         if (gameID == 9) {
             makeGridButtons(grid, 9, 9);
             setGame("Easy");
-        } else if (gameID == 16){
+            timer.reset();
+            timer.stop();
+        } else if (gameID == 16) {
             makeGridButtons(grid, 16, 16);
             setGame("Medium");
-        } else if (gameID == 30){
+            timer.reset();
+            timer.stop();
+        } else if (gameID == 30) {
             makeGridButtons(grid, 16, 30);
             setGame("Hard");
+            timer.reset();
+            timer.stop();
+
         }
 
     }
@@ -354,7 +360,7 @@ public class MinesweeperController {
     private void addLeaderBoardScore(String path) throws IOException {
         String brukerNavn = new String();
         brukerNavn = spillerNavn.getText();
-        List<String> scores = fileReader(path);
+        List<String> scores = FileHelper.readLines(path, false);
         List<Integer> timeScores = new ArrayList<>();
         for (int j = 0; j < scores.size(); j++) {
             String[] bruker = scores.get(j).split(",");
@@ -368,19 +374,20 @@ public class MinesweeperController {
 
         if (leaderBoard.getIndex() == -1) {
             fileWriter(path, scores);
-            fileReader(path);
         } else {
             scores.add(leaderBoard.getIndex(), brukerNavn + "," + recordTime);
             if (scores.size() > 20) {
-                scores.remove(21);
+                scores.remove(20);
             }
 
             fileWriter(path, scores);
-            fileReader(path);
         }
+
+        backToMenuClicked();
     }
 
-    public List fileReader(String path) throws IOException {
+    public void fileReader(String path) throws IOException {
+        ListView leaderBoardBox = new ListView<>();
         List<String> scores = FileHelper.readLines(path, false);
         List<String> tempScores = new ArrayList<>();
 
@@ -392,8 +399,6 @@ public class MinesweeperController {
 
         leaderBoardBox.getItems().setAll(tempScores);
         winningScoreBox.getChildren().add(leaderBoardBox);
-
-        return scores;
     }
 
     public void fileWriter(String path, List<String> scores) throws IOException {
@@ -437,4 +442,5 @@ public class MinesweeperController {
             columnIndex = (columnIndex + 1) == currentGrid.getColumnCount() ? 0 : ++columnIndex;
         }
     }
+
 }
