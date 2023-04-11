@@ -1,6 +1,8 @@
 package minesweeperproject;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,6 +11,8 @@ import java.util.List;
 import java.util.Set;
 
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -16,9 +20,12 @@ import javafx.print.Collation;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -32,7 +39,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import minesweeperproject.game.GridImpl;
 import minesweeperproject.game.Minesweeper;
+import minesweeperproject.game.MinesweeperLeaderBoard;
 import minesweeperproject.game.MinesweeperTimer;
+import minesweeperproject.util.FileHelper;
 
 public class MinesweeperController {
     @FXML
@@ -69,10 +78,14 @@ public class MinesweeperController {
     private Pane spillerTid = new Pane();
 
     @FXML
-    private Pane spillerNavnTekst = new Pane();
+    private Pane spillerNavnTekst, leaderBoardTekst = new Pane();
 
+    private static final String EASY_LEADERBOARD = "./src/main/resources/minesweeperproject/EasyLeaderboard.txt";
+    private static final String MEDIUM_LEADERBOARD = "./src/main/resources/minesweeperproject/MediumLeaderboard.txt";
+    private static final String HARD_LEADERBOARD = "./src/main/resources/minesweeperproject/HardLeaderboard.txt";
     private MinesweeperTimer timer = new MinesweeperTimer();
     private int recordTime;
+    private MinesweeperLeaderBoard leaderBoard = new MinesweeperLeaderBoard();
 
     private static Minesweeper game;
     private List<StackPane> bombs = new ArrayList<StackPane>();
@@ -141,7 +154,6 @@ public class MinesweeperController {
     @FXML
     public void easyClicked() throws IOException {
         changeMode("Easy");
-
     }
 
     @FXML
@@ -256,11 +268,13 @@ public class MinesweeperController {
 
     public void checkWin(GridPane gridPane) {
         if (game.getUnopenedCells().isEmpty()) {
+            int numberOfBombs = 0;
             timer.stop();
             recordTime = timer.getTime();
             int rowIndex = 0;
             int columnIndex = 0;
             for (StackPane bomb : bombs) {
+                numberOfBombs++;
                 if (bomb.getChildren().size() != 3) {
                     Image flagImage = new Image(getClass().getResource("flag.png").toExternalForm(), 30, 30, false,
                             true);
@@ -271,18 +285,60 @@ public class MinesweeperController {
                 columnIndex = (columnIndex + 1) == gridPane.getColumnCount() ? 0 : ++columnIndex;
             }
 
-            setRecordTime(recordTime);
+            if (numberOfBombs == 10) {
+                setRecordTime(recordTime, EASY_LEADERBOARD);
+            } else if (numberOfBombs == 40) {
+                setRecordTime(recordTime, MEDIUM_LEADERBOARD);
+            } else {
+                setRecordTime(recordTime, HARD_LEADERBOARD);
+            }
         }
     }
 
-    private void setRecordTime(int recordTime) {
+    private void setRecordTime(int recordTime, String path) {
         easyGrid.setVisible(false);
+        mediumGrid.setVisible(false);
+        hardGrid.setVisible(false);
         navBarBox.setVisible(false);
         timerBox.setVisible(false);
         winningScoreBox.setVisible(true);
         winningScoreBox.setDisable(false);
+
         spillerNavnTekst.getChildren().add(new Label("Skriv inn brukernavnet ditt under: "));
         spillerTid.getChildren().add(new Label("Tid: " + recordTime + " sekunder"));
+
+        try {
+            fileReader(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            Alert alert = new Alert(AlertType.WARNING, "Kunne ikke lese spillstatus");
+            alert.show();
+        }
+
+    }
+
+    @FXML
+    public void addLeaderBoardScore() {
+
+    }
+
+    public void fileReader(String path) throws IOException {
+        ListView leaderBoardBox = new ListView<>();
+        List<String> scores = FileHelper.readLines(path, false);
+        List<String> tempScores = new ArrayList<>();
+
+        tempScores.add("Ledertavle: ");
+        for (int i = 0; i < scores.size(); i++) {
+            tempScores.add((i + 1) + ". " + scores.get(i));
+        }
+
+        leaderBoardBox.getItems().setAll(tempScores);
+        winningScoreBox.getChildren().add(leaderBoardBox);
+    }
+
+    public void fileWriter(String path) {
+
     }
 
     public void makeGame(GridPane gridPane) {
@@ -294,6 +350,7 @@ public class MinesweeperController {
             Text text = new Text((grid.getElement(rowIndex, columnIndex).display().toString()));
             text.getStyleClass().add("n" + (grid.getElement(rowIndex, columnIndex).display().toString()));
             if (grid.getElement(rowIndex, columnIndex).display() == -1) {
+                System.out.println(rowIndex + ", " + columnIndex);
                 bombs.add(stackPane);
                 Image bombImage = new Image(getClass().getResource("bomb.png").toExternalForm(), 30, 30, false,
                         true);
