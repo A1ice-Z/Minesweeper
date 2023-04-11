@@ -78,7 +78,7 @@ public class MinesweeperController {
     private Pane spillerTid = new Pane();
 
     @FXML
-    private Pane spillerNavnTekst, leaderBoardTekst = new Pane();
+    private Pane spillerNavnTekst = new Pane();
 
     private static final String EASY_LEADERBOARD = "./src/main/resources/minesweeperproject/EasyLeaderboard.txt";
     private static final String MEDIUM_LEADERBOARD = "./src/main/resources/minesweeperproject/MediumLeaderboard.txt";
@@ -86,6 +86,7 @@ public class MinesweeperController {
     private MinesweeperTimer timer = new MinesweeperTimer();
     private int recordTime;
     private MinesweeperLeaderBoard leaderBoard = new MinesweeperLeaderBoard();
+    private ListView leaderBoardBox = new ListView<>();
 
     private static Minesweeper game;
     private List<StackPane> bombs = new ArrayList<StackPane>();
@@ -319,26 +320,67 @@ public class MinesweeperController {
     }
 
     @FXML
-    public void addLeaderBoardScore() {
-
+    public void easyModeAddLeaderBoardScore() throws IOException {
+        addLeaderBoardScore(EASY_LEADERBOARD);
     }
 
-    public void fileReader(String path) throws IOException {
-        ListView leaderBoardBox = new ListView<>();
+    @FXML
+    public void mediumModeAddLeaderBoardScore() throws IOException {
+        addLeaderBoardScore(MEDIUM_LEADERBOARD);
+    }
+
+    @FXML
+    public void hardModeAddLeaderBoardScore() throws IOException {
+        addLeaderBoardScore(HARD_LEADERBOARD);
+    }
+
+    private void addLeaderBoardScore(String path) throws IOException {
+        String brukerNavn = new String();
+        brukerNavn = spillerNavn.getText();
+        List<String> scores = fileReader(path);
+        List<Integer> timeScores = new ArrayList<>();
+        for (int j = 0; j < scores.size(); j++) {
+            String[] bruker = scores.get(j).split(",");
+            timeScores.add(Integer.valueOf(bruker[1]));
+        }
+
+        for (int i = 0; i < timeScores.size(); i++) {
+            leaderBoard.addResult(timeScores.get(i));
+        }
+        leaderBoard.addResult(recordTime);
+
+        if (leaderBoard.getIndex() == -1) {
+            fileWriter(path, scores);
+            fileReader(path);
+        } else {
+            scores.add(leaderBoard.getIndex(), brukerNavn + "," + recordTime);
+            if (scores.size() > 20) {
+                scores.remove(21);
+            }
+
+            fileWriter(path, scores);
+            fileReader(path);
+        }
+    }
+
+    public List fileReader(String path) throws IOException {
         List<String> scores = FileHelper.readLines(path, false);
         List<String> tempScores = new ArrayList<>();
 
         tempScores.add("Ledertavle: ");
         for (int i = 0; i < scores.size(); i++) {
-            tempScores.add((i + 1) + ". " + scores.get(i));
+            String[] bruker = scores.get(i).split(",");
+            tempScores.add((i + 1) + ". " + bruker[0] + " " + bruker[1]);
         }
 
         leaderBoardBox.getItems().setAll(tempScores);
         winningScoreBox.getChildren().add(leaderBoardBox);
+
+        return scores;
     }
 
-    public void fileWriter(String path) {
-
+    public void fileWriter(String path, List<String> scores) throws IOException {
+        FileHelper.writeLines(path, scores);
     }
 
     public void makeGame(GridPane gridPane) {
