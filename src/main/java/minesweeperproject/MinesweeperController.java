@@ -182,20 +182,37 @@ public class MinesweeperController {
     }
 
     @FXML
-    public void newGameClicked() throws IOException {
+    public void newEasyGameClicked() throws IOException {
         makeNewGame(easyGrid);
+    }
+
+    @FXML
+    public void newMediumGameClicked() throws IOException {
+        makeNewGame(mediumGrid);
+    }
+
+    @FXML
+    public void newHardGameClicked() throws IOException {
+        makeNewGame(hardGrid);
     }
 
     public void makeNewGame(GridPane grid) {
         bombs = new ArrayList<StackPane>();
         falseFlags = new ArrayList<StackPane>();
         clickCount = 0;
-        System.out.println(easyGrid.getChildren());
-        easyGrid.getChildren().clear();
-        System.out.println(easyGrid.getChildren());
-        makeGridButtons(easyGrid, 9, 9);
-        System.out.println(easyGrid.getChildren());
-        setGame("Easy");
+        int gameID = grid.getColumnCount();
+        grid.getChildren().clear();
+        if (gameID == 9) {
+            makeGridButtons(grid, 9, 9);
+            setGame("Easy");
+        } else if (gameID == 16){
+            makeGridButtons(grid, 16, 16);
+            setGame("Medium");
+        } else if (gameID == 30){
+            makeGridButtons(grid, 16, 30);
+            setGame("Hard");
+        }
+
     }
 
     public void onMouseClick(MouseEvent event, GridPane grid, Node node) {
