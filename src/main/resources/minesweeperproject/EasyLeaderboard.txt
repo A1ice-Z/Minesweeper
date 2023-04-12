@@ -10,9 +10,3 @@ oskar,1000
 oskar,1000
 oskar,1000
 oskar,1000
-oskar,1000
-oskar,1000
-oskar,1000
-oskar,1000
-oskar,1000
-oskar,1000
