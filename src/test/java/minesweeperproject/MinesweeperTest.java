@@ -85,9 +85,9 @@ public class MinesweeperTest {
             public void testSetNumbers() {
                 int[][] expectedCellNumbers = {
                         { 0, 1, 1, 1, 0 },
-                        { 0, 1, -1, 1, 1 },
-                        { 1, 1, 0, 2, 1 },
-                        { 1, 1, 2, -1, 1 },
+                        { 0, 1, -1, 1, 0 },
+                        { 0, 1, 2, 2, 1 },
+                        { 1, 1, 1, -1, 1 },
                         { -1, 1, 1, 1, 1 }
                 };
                 // det er slik at at testen fungerer til tross for at bombene ikke nødvendigvis
