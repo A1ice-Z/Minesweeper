@@ -39,6 +39,7 @@ import minesweeperproject.game.Minesweeper;
 import minesweeperproject.game.MinesweeperLeaderBoard;
 import minesweeperproject.game.MinesweeperTimer;
 import minesweeperproject.util.FileHelper;
+import minesweeperproject.game.Filbehanding;
 
 public class MinesweeperController {
     @FXML
@@ -333,7 +334,7 @@ public class MinesweeperController {
         spillerTid.getChildren().add(new Label("Tid: " + recordTime + " sekunder"));
 
         try {
-            fileReader(path);
+            leaderBoardSetUp(path);
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -374,38 +375,26 @@ public class MinesweeperController {
         leaderBoard.addResult(recordTime);
 
         if (leaderBoard.getIndex() == -1) {
-            fileWriter(path, scores);
+            Filbehanding.fileWriter(path, scores);
         } else {
             scores.add(leaderBoard.getIndex(), brukerNavn + "," + recordTime);
             if (scores.size() > 16) {
                 scores.remove(16);
             }
 
-            fileWriter(path, scores);
+            Filbehanding.fileWriter(path, scores);
         }
 
         backToMenuClicked();
     }
 
-    public void fileReader(String path) throws IOException {
+    public void leaderBoardSetUp(String path) throws IOException {
         ListView leaderBoardBox = new ListView<>();
-        List<String> scores = FileHelper.readLines(path, false);
-        ArrayList<String> tempScores = new ArrayList<>();
-
-        tempScores.add("Ledertavle: ");
-        for (int i = 0; i < scores.size(); i++) {
-            String[] bruker = scores.get(i).split(",");
-            if (bruker.length == 2) {
-                tempScores.add((i + 1) + ". " + bruker[0] + " " + bruker[1]);
-            }
-        }
-
-        leaderBoardBox.getItems().setAll(tempScores);
+        ArrayList<String> scores = new ArrayList<>();
+        Filbehanding.fileReader(path);
+        scores = Filbehanding.getTempScores();
+        leaderBoardBox.getItems().setAll(scores);
         winningScoreBox.getChildren().add(leaderBoardBox);
-    }
-
-    public void fileWriter(String path, List<String> scores) throws IOException {
-        FileHelper.writeLines(path, scores);
     }
 
     public void makeGame(GridPane gridPane) {
@@ -449,7 +438,7 @@ public class MinesweeperController {
     public void updateMinesLeft(boolean increase) {
         System.out.println(minesLeft);
         if (clickCount == 0) {
-            
+
         } else if (increase)
             minesLeft++;
         else

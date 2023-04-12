@@ -3,14 +3,14 @@ yeahh,7
 yeah,14
 te,14
 phil,21
+hola,41
+solo,41
 ben,49
+hey,57
 alice,58
 trygve,64
 hei,69
 lol,121
-oskar,1000
-oskar,1000
-oskar,1000
 oskar,1000
 oskar,1000
 oskar,1000
