@@ -57,7 +57,13 @@ public class MinesweeperController {
     private GridPane hardGrid = new GridPane();
 
     @FXML
-    private HBox navBarBox = new HBox();
+    private Text minesLeftText;
+
+    @FXML
+    private HBox navBarBox;
+
+    @FXML
+    private HBox minesLeftBox = new HBox();
 
     @FXML
     private HBox timerBox = new HBox();
@@ -88,6 +94,7 @@ public class MinesweeperController {
     private List<StackPane> bombs = new ArrayList<StackPane>();
     private List<StackPane> falseFlags = new ArrayList<StackPane>();
     private int clickCount;
+    private int minesLeft = 0;
 
     public void initialize() {
         makeGridButtons(easyGrid, 9, 9);
@@ -119,19 +126,20 @@ public class MinesweeperController {
 
     public void setGame(String mode) {
         if (mode.equals("Easy")) {
-            System.out.println(game);
             game = new Minesweeper(9, 9, 10);
-            System.out.println(game);
-        } else if (mode.equals("Medium"))
+            minesLeft = 10;
+        } else if (mode.equals("Medium")) {
             game = new Minesweeper(16, 16, 40);
-        else
+            minesLeft = 40;
+        } else {
             game = new Minesweeper(16, 30, 99);
+            minesLeft = 99;
+        }
     }
 
     private void changeMode(String mode) throws IOException {
         Set<String> modes = new HashSet<>(Arrays.asList("Easy", "Medium", "Hard"));
         if (modes.contains(mode)) {
-            setGame(mode);
             clickCount = 0;
             Stage primaryStage = (Stage) easyButton.getScene().getWindow();
 
@@ -146,6 +154,7 @@ public class MinesweeperController {
         } else {
             throw new IllegalArgumentException("mode does not exsist");
         }
+        setGame(mode);
     }
 
     @FXML
@@ -201,20 +210,16 @@ public class MinesweeperController {
         if (gameID == 9) {
             makeGridButtons(grid, 9, 9);
             setGame("Easy");
-            timer.reset();
-            timer.stop();
         } else if (gameID == 16) {
             makeGridButtons(grid, 16, 16);
             setGame("Medium");
-            timer.reset();
-            timer.stop();
         } else if (gameID == 30) {
             makeGridButtons(grid, 16, 30);
             setGame("Hard");
-            timer.reset();
-            timer.stop();
-
         }
+        updateMinesLeft(false);
+        timer.reset();
+        timer.stop();
 
     }
 
@@ -241,12 +246,13 @@ public class MinesweeperController {
                 gameGrid.getElement(rowIndex, colIndex).setFlagged(true);
                 if (!bombs.contains(stackPane))
                     falseFlags.add(stackPane);
-
+                updateMinesLeft(false);
             } else {
                 if (falseFlags.contains(stackPane))
                     falseFlags.remove(stackPane);
                 stackPane.getChildren().remove(2);
                 gameGrid.getElement(rowIndex, colIndex).setFlagged(false);
+                updateMinesLeft(true);
             }
         } else if (event.getButton() == MouseButton.PRIMARY) {
             if (clickCount == 0) {
@@ -289,13 +295,11 @@ public class MinesweeperController {
 
     public void checkWin(GridPane gridPane) {
         if (game.getUnopenedCells().isEmpty()) {
-            int numberOfBombs = 0;
             timer.stop();
             recordTime = timer.getTime();
             int rowIndex = 0;
             int columnIndex = 0;
             for (StackPane bomb : bombs) {
-                numberOfBombs++;
                 if (bomb.getChildren().size() != 3) {
                     Image flagImage = new Image(getClass().getResource("flag.png").toExternalForm(), 30, 30, false,
                             true);
@@ -306,9 +310,9 @@ public class MinesweeperController {
                 columnIndex = (columnIndex + 1) == gridPane.getColumnCount() ? 0 : ++columnIndex;
             }
 
-            if (numberOfBombs == 10) {
+            if (bombs.size() == 10) {
                 setRecordTime(recordTime, EASY_LEADERBOARD);
-            } else if (numberOfBombs == 40) {
+            } else if (bombs.size() == 40) {
                 setRecordTime(recordTime, MEDIUM_LEADERBOARD);
             } else {
                 setRecordTime(recordTime, HARD_LEADERBOARD);
@@ -318,6 +322,7 @@ public class MinesweeperController {
 
     private void setRecordTime(int recordTime, String path) {
         easyGrid.setVisible(false);
+        minesLeftBox.setVisible(false);
         mediumGrid.setVisible(false);
         hardGrid.setVisible(false);
         navBarBox.setVisible(false);
@@ -442,4 +447,13 @@ public class MinesweeperController {
         }
     }
 
+    public void updateMinesLeft(boolean increase) {
+        if (clickCount == 0) {
+            
+        } else if (increase)
+            minesLeft++;
+        else
+            minesLeft--;
+        minesLeftText.setText(String.format("%d", minesLeft));
+    }
 }
