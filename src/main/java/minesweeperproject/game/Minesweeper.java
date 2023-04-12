@@ -3,7 +3,6 @@ package minesweeperproject.game;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
 import minesweeperproject.game.celler.BombCell;
@@ -28,6 +27,10 @@ public class Minesweeper {
      * @param totalMines The amount of bombs there exists in the grid
      */
     public Minesweeper(int rows, int columns, int totalMines) {
+        if (totalMines <= 0 || rows <= 0 || columns <= 0) {
+            throw new IllegalArgumentException(
+                    "Man kan ikke sette antall rows, columns eller toltalMines lik eller mindre enn 0");
+        }
         this.totalMines = totalMines;
         playingGrid = new GridImpl(rows, columns);
         for (int i = 0; i < rows; i++) {
@@ -110,7 +113,6 @@ public class Minesweeper {
             return;
         // if venstreclick
         if (clickedCell.display() == -1) {
-            System.out.println("bruh");
             gameLost = true;
         } else {
             clickedCell.open();
