@@ -10,9 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javafx.animation.Timeline;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -228,7 +225,7 @@ public class MinesweeperController {
         Integer colIndex = GridPane.getColumnIndex(node);
         GridImpl gameGrid = game.getPlayingGrid();
         StackPane stackPane = (StackPane) node;
-        System.out.println(event.getButton());
+        // System.out.println(event.getButton());
         // finner ut om det er høyre eller venstre click
         if (event.getButton() == MouseButton.SECONDARY) {
             if (clickCount == 0 || gameGrid.getElement(rowIndex, colIndex).isOpen()) {
@@ -376,8 +373,8 @@ public class MinesweeperController {
             fileWriter(path, scores);
         } else {
             scores.add(leaderBoard.getIndex(), brukerNavn + "," + recordTime);
-            if (scores.size() > 20) {
-                scores.remove(20);
+            if (scores.size() > 16) {
+                scores.remove(16);
             }
 
             fileWriter(path, scores);
@@ -389,12 +386,14 @@ public class MinesweeperController {
     public void fileReader(String path) throws IOException {
         ListView leaderBoardBox = new ListView<>();
         List<String> scores = FileHelper.readLines(path, false);
-        List<String> tempScores = new ArrayList<>();
+        ArrayList<String> tempScores = new ArrayList<>();
 
         tempScores.add("Ledertavle: ");
         for (int i = 0; i < scores.size(); i++) {
             String[] bruker = scores.get(i).split(",");
-            tempScores.add((i + 1) + ". " + bruker[0] + " " + bruker[1]);
+            if (bruker.length == 2) {
+                tempScores.add((i + 1) + ". " + bruker[0] + " " + bruker[1]);
+            }
         }
 
         leaderBoardBox.getItems().setAll(tempScores);

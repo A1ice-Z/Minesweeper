@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class MinesweeperLeaderBoard {
     ArrayList<Integer> minesweeperLeaderBoard;
-    private final int maxSize = 20;
+    private final int maxSize = 16;
     private int index;
 
     public MinesweeperLeaderBoard() {
