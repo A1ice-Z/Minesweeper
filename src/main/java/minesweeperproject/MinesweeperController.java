@@ -127,14 +127,12 @@ public class MinesweeperController {
     public void setGame(String mode) {
         if (mode.equals("Easy")) {
             game = new Minesweeper(9, 9, 10);
-            minesLeft = 10;
         } else if (mode.equals("Medium")) {
             game = new Minesweeper(16, 16, 40);
-            minesLeft = 40;
         } else {
             game = new Minesweeper(16, 30, 99);
-            minesLeft = 99;
         }
+        System.out.println(minesLeft);
     }
 
     private void changeMode(String mode) throws IOException {
@@ -260,6 +258,7 @@ public class MinesweeperController {
                 clickCount++;
                 makeGame(grid);
                 timer.start();
+                minesLeft = bombs.size();
             } else {
                 game.onClick(rowIndex, colIndex);
             }
@@ -448,6 +447,7 @@ public class MinesweeperController {
     }
 
     public void updateMinesLeft(boolean increase) {
+        System.out.println(minesLeft);
         if (clickCount == 0) {
             
         } else if (increase)
