@@ -1,5 +1,6 @@
 ben,49
 alice,58
+trygve,64
 oskar,1000
 oskar,1000
 oskar,1000
