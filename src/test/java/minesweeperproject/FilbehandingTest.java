@@ -1,5 +1,7 @@
 package minesweeperproject;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -24,6 +26,13 @@ public class FilbehandingTest {
         java.nio.file.Files.write(java.nio.file.Paths.get(tempPath), tempFilInnhold);
         // denne funksjonen skriv innholdet tempFilInnhold til en ny midtlertidig fil
         Filbehanding.fileReader(tempPath);
+    }
+
+    @Test
+    @DisplayName("Testen om henting av elementer fra fil fungerer på riktig måte")
+    public void testGetTempScores() {
+        assertEquals("john,1", tempFilInnhold.get(0));
+        assertEquals("markus,20", tempFilInnhold.get(1));
     }
 
     @Test
