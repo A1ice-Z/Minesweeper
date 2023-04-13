@@ -46,7 +46,7 @@
       <HBox fx:id="timerBox" layoutX="345.0" layoutY="36.0" prefHeight="47.0" prefWidth="255.0" />
       <VBox fx:id="winningScoreBox" alignment="CENTER" disable="true" layoutX="-2.0" layoutY="-3.0" prefHeight="606.0" prefWidth="607.0" visible="false">
          <children>
-            <Pane fx:id="spillerNavnTekst" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0" />
+            <Pane fx:id="spillerNavnTekst" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="15.0" prefWidth="300.0" />
             <TextField fx:id="spillerNavn" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="300.0">
                <VBox.margin>
                   <Insets left="40.0" right="40.0" top="2.0" />

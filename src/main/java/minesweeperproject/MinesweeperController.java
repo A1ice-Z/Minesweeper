@@ -61,7 +61,7 @@ public class MinesweeperController {
     private Text minesLeftText;
 
     @FXML
-    private HBox navBarBox;
+    private HBox navBarBox = new HBox();
 
     @FXML
     private HBox minesLeftBox = new HBox();
@@ -84,6 +84,11 @@ public class MinesweeperController {
     @FXML
     private Pane spillerNavnTekst = new Pane();
 
+    private Image flagImage = new Image(getClass().getResource("flag.png").toExternalForm(), 30, 30, false, true);
+    private Image bombImage = new Image(getClass().getResource("bomb.png").toExternalForm(), 30, 30, false,
+            true);
+    private Image xImage = new Image(getClass().getResource("X.png").toExternalForm(), 30, 30, false,
+            true);
     private static final String EASY_LEADERBOARD = "./src/main/resources/minesweeperproject/EasyLeaderboard.txt";
     private static final String MEDIUM_LEADERBOARD = "./src/main/resources/minesweeperproject/MediumLeaderboard.txt";
     private static final String HARD_LEADERBOARD = "./src/main/resources/minesweeperproject/HardLeaderboard.txt";
@@ -92,7 +97,7 @@ public class MinesweeperController {
     private MinesweeperLeaderBoard leaderBoard = new MinesweeperLeaderBoard();
 
     private static Minesweeper game;
-    private List<StackPane> bombs = new ArrayList<StackPane>();
+    private List<StackPane> mines = new ArrayList<StackPane>();
     private List<StackPane> falseFlags = new ArrayList<StackPane>();
     private int clickCount;
     private int minesLeft = 0;
@@ -133,7 +138,6 @@ public class MinesweeperController {
         } else {
             game = new Minesweeper(16, 30, 99);
         }
-        System.out.println(minesLeft);
     }
 
     private void changeMode(String mode) throws IOException {
@@ -201,7 +205,7 @@ public class MinesweeperController {
     }
 
     public void makeNewGame(GridPane grid) {
-        bombs = new ArrayList<StackPane>();
+        mines = new ArrayList<StackPane>();
         falseFlags = new ArrayList<StackPane>();
         clickCount = 0;
         int gameID = grid.getColumnCount();
@@ -209,12 +213,15 @@ public class MinesweeperController {
         if (gameID == 9) {
             makeGridButtons(grid, 9, 9);
             setGame("Easy");
+            minesLeft = 10;
         } else if (gameID == 16) {
             makeGridButtons(grid, 16, 16);
             setGame("Medium");
+            minesLeft = 40;
         } else if (gameID == 30) {
             makeGridButtons(grid, 16, 30);
             setGame("Hard");
+            minesLeft = 99;
         }
         updateMinesLeft(false);
         timer.reset();
@@ -229,21 +236,18 @@ public class MinesweeperController {
         Integer colIndex = GridPane.getColumnIndex(node);
         GridImpl gameGrid = game.getPlayingGrid();
         StackPane stackPane = (StackPane) node;
-        // System.out.println(event.getButton());
-        // finner ut om det er høyre eller venstre click
         if (event.getButton() == MouseButton.SECONDARY) {
             if (clickCount == 0 || gameGrid.getElement(rowIndex, colIndex).isOpen()) {
                 return;
             }
             if (!gameGrid.getElement(rowIndex, colIndex).isFlagged()) {
-                Image flagImage = new Image(getClass().getResource("flag.png").toExternalForm(), 30, 30, false, true);
                 ImageView imageView = new ImageView(flagImage);
                 imageView.setOnMouseClicked(click -> {
                     onMouseClick(click, grid, stackPane);
                 });
                 stackPane.getChildren().add(imageView);
                 gameGrid.getElement(rowIndex, colIndex).setFlagged(true);
-                if (!bombs.contains(stackPane))
+                if (!mines.contains(stackPane))
                     falseFlags.add(stackPane);
                 updateMinesLeft(false);
             } else {
@@ -259,7 +263,7 @@ public class MinesweeperController {
                 clickCount++;
                 makeGame(grid);
                 timer.start();
-                minesLeft = bombs.size();
+                minesLeft = mines.size();
             } else {
                 game.onClick(rowIndex, colIndex);
             }
@@ -276,17 +280,13 @@ public class MinesweeperController {
         timer.stop();
         gridPane.getChildren().get(row * gridPane.getColumnCount() + column).setStyle("-fx-background-color: RED");
         ;
-        for (StackPane bomb : bombs) {
-            if (bomb.getChildren().size() != 3)
-                bomb.getChildren().remove(1);
+        for (StackPane mine : mines) {
+            if (mine.getChildren().size() != 3)
+                mine.getChildren().remove(1);
         }
         for (StackPane falseFlag : falseFlags) {
             falseFlag.getChildren().remove(0, 3);
-            Image bombImage = new Image(getClass().getResource("bomb.png").toExternalForm(), 30, 30, false,
-                    true);
             ImageView imageView = new ImageView(bombImage);
-            Image xImage = new Image(getClass().getResource("X.png").toExternalForm(), 30, 30, false,
-                    true);
             ImageView imageView2 = new ImageView(xImage);
             falseFlag.getChildren().add(imageView);
             falseFlag.getChildren().add(imageView2);
@@ -297,22 +297,9 @@ public class MinesweeperController {
         if (game.getUnopenedCells().isEmpty()) {
             timer.stop();
             recordTime = timer.getTime();
-            int rowIndex = 0;
-            int columnIndex = 0;
-            for (StackPane bomb : bombs) {
-                if (bomb.getChildren().size() != 3) {
-                    Image flagImage = new Image(getClass().getResource("flag.png").toExternalForm(), 30, 30, false,
-                            true);
-                    ImageView imageView = new ImageView(flagImage);
-                    bomb.getChildren().add(imageView);
-                }
-                rowIndex = (columnIndex + 1) == gridPane.getColumnCount() ? ++rowIndex : rowIndex;
-                columnIndex = (columnIndex + 1) == gridPane.getColumnCount() ? 0 : ++columnIndex;
-            }
-
-            if (bombs.size() == 10) {
+            if (mines.size() == 10) {
                 setRecordTime(recordTime, EASY_LEADERBOARD);
-            } else if (bombs.size() == 40) {
+            } else if (mines.size() == 40) {
                 setRecordTime(recordTime, MEDIUM_LEADERBOARD);
             } else {
                 setRecordTime(recordTime, HARD_LEADERBOARD);
@@ -406,10 +393,7 @@ public class MinesweeperController {
             Text text = new Text((grid.getElement(rowIndex, columnIndex).display().toString()));
             text.getStyleClass().add("n" + (grid.getElement(rowIndex, columnIndex).display().toString()));
             if (grid.getElement(rowIndex, columnIndex).display() == -1) {
-                System.out.println(rowIndex + ", " + columnIndex);
-                bombs.add(stackPane);
-                Image bombImage = new Image(getClass().getResource("bomb.png").toExternalForm(), 30, 30, false,
-                        true);
+                mines.add(stackPane);
                 ImageView imageView = new ImageView(bombImage);
                 stackPane.getChildren().add(0, imageView);
             } else
@@ -436,7 +420,6 @@ public class MinesweeperController {
     }
 
     public void updateMinesLeft(boolean increase) {
-        System.out.println(minesLeft);
         if (clickCount == 0) {
 
         } else if (increase)

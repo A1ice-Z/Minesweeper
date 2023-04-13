@@ -44,6 +44,7 @@ public class GridImpl implements IGrid {
 
     @Override
     public Cell getElement(int row, int column) {
+
         return grid.get(row).get(column);
     }
 

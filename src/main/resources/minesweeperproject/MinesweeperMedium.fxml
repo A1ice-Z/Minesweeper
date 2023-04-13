@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeperproject.MinesweeperController">
    <children>
-      <HBox prefHeight="34.0" prefWidth="134.0">
+      <HBox fx:id="navBarBox" prefHeight="34.0" prefWidth="134.0">
          <children>
             <Button fx:id="backToMenuButton" mnemonicParsing="false" onAction="#backToMenuClicked" text="Meny" />
             <Button mnemonicParsing="false" onAction="#newMediumGameClicked" text="Nytt Spill">

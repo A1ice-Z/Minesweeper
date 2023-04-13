@@ -5,17 +5,16 @@ package minesweeperproject.game.celler;
  */
 
 public abstract class Cell {
-    protected boolean open;
-    protected boolean flagged;
+    private boolean open;
+    private boolean flagged;
     private int row;
     private int column;
 
     /**
-     * Creates a new cell places on the cordinates (row, column)---> usikker på om
-     * det er dette eller (column, row)
+     * Creates a new cell places on the cordinates (row, column)
      * 
-     * @param row    The x cordinate for the cell
-     * @param column The y cordinate for the cell
+     * @param row    The y cordinate for the cell
+     * @param column The x cordinate for the cell
      */
     public Cell(int row, int column) {
         this.row = row;
@@ -63,7 +62,8 @@ public abstract class Cell {
     }
 
     /**
-     * Returns the value of the cell --> usikker på om dette er riktig def
+     * Returns the value of the cell which is to be displayed. Differs for bombs and
+     * cells
      * 
      * @return Integer
      */
@@ -72,7 +72,9 @@ public abstract class Cell {
     /**
      * Opens up the cell that is clicked
      */
-    public abstract void open();
+    public void open() {
+        open = true;
+    };
 
     public static void main(String[] args) {
         System.out.println();

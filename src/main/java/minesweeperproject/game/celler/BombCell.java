@@ -16,11 +16,4 @@ public class BombCell extends Cell {
     public Integer display() {
         return -1;
     }
-
-    @Override
-    public void open() {
-        System.out.println("game over");
-        this.open = true;
-    }
-
 }
