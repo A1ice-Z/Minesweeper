@@ -90,6 +90,7 @@ public class MinesweeperTest {
                         { 1, 1, 1, -1, 1 },
                         { -1, 1, 1, 1, 1 }
                 };
+
                 // det er slik at at testen fungerer til tross for at bombene ikke nødvendigvis
                 // er plassert på samme sted hver gang, er at det forventede rutenettet
                 // (expectedNumbers) er basert på et rutenett der bombene er plassert på
