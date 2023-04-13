@@ -98,7 +98,7 @@ public class MinesweeperTest {
                 // tilfeldig hver gang, så vil det genererte rutenettet ha de samme tallverdiene
                 // som forventet rutenett når det gjelder antall bomber rundt hver celle, så
                 // lenge bombene er plassert i samme mønster som i testen.
-                // MEN HVORFOR ER DET SLIK!!!!
+                // MEN HVORFOR ER DET SLIK!!!! --> Spør Arash
 
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 5; j++) {
