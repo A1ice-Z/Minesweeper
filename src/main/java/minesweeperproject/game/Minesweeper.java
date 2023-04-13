@@ -131,6 +131,11 @@ public class Minesweeper {
         // primary= venstre click and secondary = høyre click button? sjekke for det
     }
 
+    /**
+     * Return the current Minesweeper games amount of unopened cells
+     * 
+     * @return The current Minesweeper games amount of unopened cells
+     */
     public Collection<NumberCell> getUnopenedCells() {
         return unopenedCells;
     }
