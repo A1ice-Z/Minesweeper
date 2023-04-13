@@ -15,6 +15,13 @@ public class MinesweeperTimer extends HBox {
 
     private Timeline minesweeperTimeline;
 
+    /**
+     * Sets what the design and position of the timer text in the
+     * minesweeperTimeLabel is supposed to look like, and also ads it to an HBox.
+     * 
+     * Makes the minesweeperTimeline and spesefies how fast the timer is supposed to
+     * count, and how long the timer can last
+     */
     public MinesweeperTimer() {
         minesweeperTimeLabel.setFont(new Font("Arial", 15));
         minesweeperTimeLabel.setAlignment(Pos.CENTER);
@@ -27,24 +34,45 @@ public class MinesweeperTimer extends HBox {
         minesweeperTimeline.setCycleCount(Animation.INDEFINITE);
     }
 
+    /**
+     * Starts the timer, and shows the time as a String format text in the
+     * minesweeperTimeLabel
+     */
     public void start() {
         minesweeperTimeLabel.setText(String.valueOf(time));
         minesweeperTimeline.play();
     }
 
+    /**
+     * Resets the timer, and shows the time as a String format text in the
+     * minesweeperTimeLabel
+     */
     public void reset() {
         time = 0;
         minesweeperTimeLabel.setText(String.valueOf(time));
     }
 
+    /**
+     * Stops the timer
+     */
     public void stop() {
         minesweeperTimeline.stop();
     }
 
+    /**
+     * Returns the minesweeper timeline
+     * 
+     * @return The minesweeper timeline
+     */
     public int getTime() {
         return time;
     }
 
+    /**
+     * Returns the minesweeper timeline
+     * 
+     * @return The minesweeper timeline
+     */
     public Timeline getMinesweeperTimeline() {
         return minesweeperTimeline;
     }
