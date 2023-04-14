@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import minesweeperproject.util.FileHelper;
 
+/**
+ * Class that can read and write to file
+ */
+
 public class Filbehanding {
     private static ArrayList<String> tempScores;
 

@@ -2,6 +2,10 @@ package minesweeperproject.game;
 
 import java.util.ArrayList;
 
+/**
+ * Class that makes the minesweeper leaderborad for each game
+ */
+
 public class MinesweeperLeaderBoard {
     ArrayList<Integer> minesweeperLeaderBoard;
     private final int maxSize = 16;
