@@ -10,9 +10,9 @@ hey,57
 alice,58
 trygve,64
 hei,69
+jolo,78
 lki,93
 lol,121
-oskar,1000
 oskar,1000
 oskar,1000
 oskar,1000
