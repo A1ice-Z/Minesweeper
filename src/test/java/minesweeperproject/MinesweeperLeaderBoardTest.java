@@ -94,6 +94,15 @@ public class MinesweeperLeaderBoardTest {
         }
 
         @Test
+        @DisplayName("Tester for ugyldige resultater")
+        public void testInnvalidResult() {
+            assertThrows(IllegalArgumentException.class, () -> {
+                minesweeperLeaderBoard.addResult(-100);
+                ;
+            }, "Resultatet kan ikke være negativt");
+        }
+
+        @Test
         @DisplayName("Tester om henting av element fra board kaster en illegalArgument exception for ugyldig posisjon")
         public void testGetElementInvalidPosition() {
             assertThrows(IllegalArgumentException.class, () -> {

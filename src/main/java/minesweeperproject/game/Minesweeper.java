@@ -25,6 +25,8 @@ public class Minesweeper {
      * @param rows       The amount of rows this games grid has
      * @param columns    The amount of columns this games grid has
      * @param totalMines The amount of bombs there exists in the grid
+     * @throws IllegalArgumentException If rows, columns or toltalmines is equal or
+     *                                  lower than 0
      */
     public Minesweeper(int rows, int columns, int totalMines) {
         if (totalMines <= 0 || rows <= 0 || columns <= 0) {
@@ -45,8 +47,12 @@ public class Minesweeper {
      * 
      * @param row    The row of the cell the player clicked
      * @param column The column of the cell the player clicked
+     * @throws IllegalArgumentException If the cells cordinates is out of bounds
      */
     public void onFirstClick(int row, int column) {
+        if (row < 0 || column < 0) {
+            throw new IllegalArgumentException("Kordinatene til cellen kan ikke være mindre enn 0");
+        }
         generateMines(totalMines, row, column);
         setNumbers();
         unopenedCells.remove(playingGrid.getElement(row, column));
@@ -61,8 +67,14 @@ public class Minesweeper {
      *                        when the game starts
      * @param firstCellColumn The y cordinates to the first cell that is clicked on
      *                        when the game starts
+     * @throws IllegalArgumentException If the cells cordinates and totalMines is
+     *                                  less than 0
      */
     public void generateMines(int totalMines, int firstCellRow, int firstCellColumn) {
+        if (firstCellColumn < 0 || firstCellRow < 0 || totalMines < 0) {
+            throw new IllegalArgumentException(
+                    "Totalmines og kordinatene til den første cellene kan ikke være mindre enn 0");
+        }
         HashSet<String> setOfMines = new HashSet<>();
         while (setOfMines.size() != totalMines) {
             int row = new Random().nextInt(playingGrid.getRowCount());
@@ -105,8 +117,13 @@ public class Minesweeper {
      * 
      * @param row    The x cordinate for the cell
      * @param column The y cordinate for the cell
+     * @throws IllegalArgumentException If the cells cordinates is out of bounds
      */
     public void onClick(int row, int column) {
+        if (row < 0 || column < 0) {
+            throw new IllegalArgumentException("Kordinatene til cellen kan ikke være mindre enn 0");
+        }
+
         Cell clickedCell = playingGrid.getElement(row, column);
 
         if (clickedCell.isFlagged() || clickedCell.isOpen())

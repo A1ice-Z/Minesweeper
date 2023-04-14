@@ -9,6 +9,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
+/**
+ * Class that makes the timer for each minesweeper game
+ */
+
 public class MinesweeperTimer extends HBox {
     private int time = 0;
     private Label minesweeperTimeLabel = new Label(String.valueOf(time));

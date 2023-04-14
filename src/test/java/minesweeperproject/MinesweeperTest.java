@@ -9,6 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+
 import minesweeperproject.game.Minesweeper;
 import minesweeperproject.game.celler.NumberCell;
 
@@ -54,6 +56,39 @@ public class MinesweeperTest {
             game.onFirstClick(0, 0);
             assertTrue(game.getPlayingGrid().getElement(0, 0).isOpen());
             assertFalse(game.getPlayingGrid().getElement(0, 0).display() == -1);
+        }
+
+        @Test
+        @DisplayName("Tester for ugyldige verdier for det første klikket")
+        public void testInvalidOnFirstClick() {
+            assertThrows(IllegalArgumentException.class, () -> {
+                game.onClick(-1, 0);
+                ;
+            }, "Kordinatene til cellen kan ikke være mindre enn 0");
+            assertThrows(IllegalArgumentException.class, () -> {
+                game.onClick(2, -1);
+                ;
+            }, "Kordinatene til cellen kan ikke være mindre enn 0");
+        }
+
+        @Test
+        @DisplayName("Tester for ugyldige verdier når man skal generere miner")
+        public void testInnvalidGenerateMines() {
+            assertThrows(IllegalArgumentException.class, () -> {
+                game.generateMines(-1, 0, 0);
+                ;
+                ;
+            }, "Totalmines og kordinatene til den første cellene kan ikke være mindre enn 0");
+            assertThrows(IllegalArgumentException.class, () -> {
+                game.generateMines(2, -5, 0);
+                ;
+                ;
+            }, "Totalmines og kordinatene til den første cellene kan ikke være mindre enn 0");
+            assertThrows(IllegalArgumentException.class, () -> {
+                game.generateMines(-1, 0, -1);
+                ;
+                ;
+            }, "Totalmines og kordinatene til den første cellene kan ikke være mindre enn 0");
         }
 
         @Nested
@@ -122,6 +157,19 @@ public class MinesweeperTest {
 
                 assertTrue(game.getPlayingGrid().getElement(rowCount, column).isOpen());
                 assertFalse(game.getUnopenedCells().contains(game.getPlayingGrid().getElement(rowCount, column)));
+            }
+
+            @Test
+            @DisplayName("Tester for ugyldige verdier når man klikker på rutene")
+            public void testInnvalidOnClick() {
+                assertThrows(IllegalArgumentException.class, () -> {
+                    game.onClick(-1, 0);
+                    ;
+                }, "Kordinatene til cellen kan ikke være mindre enn 0");
+                assertThrows(IllegalArgumentException.class, () -> {
+                    game.onClick(1, -1);
+                    ;
+                }, "Kordinatene til cellen kan ikke være mindre enn 0");
             }
         }
     }
