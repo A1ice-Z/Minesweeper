@@ -15,6 +15,7 @@ public abstract class Cell {
      * 
      * @param row    The y cordinate for the cell
      * @param column The x cordinate for the cell
+     * @throws IllegalArgumentException if the cells cordinates are negativ
      */
     public Cell(int row, int column) {
         if (row < 0 || column < 0) {

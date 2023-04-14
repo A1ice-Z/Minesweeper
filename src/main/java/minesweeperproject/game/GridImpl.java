@@ -44,12 +44,18 @@ public class GridImpl implements IGrid {
 
     @Override
     public Cell getElement(int row, int column) {
+        if (row < 0 || column < 0 || row > this.getRowCount() || column > this.getColumnCount()) {
+            throw new IllegalArgumentException("Your row or column must be a number inside the grid");
+        }
 
         return grid.get(row).get(column);
     }
 
     @Override
     public void setElement(int row, int column, Cell element) {
+        if (row < 0 || column < 0 || row > this.getRowCount() || column > this.getColumnCount()) {
+            throw new IllegalArgumentException("Your row or column must be a number inside the grid");
+        }
         grid.get(row).set(column, element);
     }
 

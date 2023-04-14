@@ -32,6 +32,7 @@ public class MinesweeperLeaderBoard {
      * 
      * @param position The cordinates to the element that they want to get
      * @return The element from a spesific position
+     * @throws IllegalArgumentException If the posision is out of bounds
      */
     public int getElement(int position) {
         if (position >= this.minesweeperLeaderBoard.size()) {
@@ -46,8 +47,12 @@ public class MinesweeperLeaderBoard {
      * is then added to its suitable position
      * 
      * @param result The result that is being added to the leaderboard
+     * @throws IllegalArgumentException If the result is negative
      */
     public void addResult(int result) {
+        if (result < 0) {
+            throw new IllegalArgumentException("Resultatet kan ikke være negativt");
+        }
         index = -1;
         int tempSize = minesweeperLeaderBoard.size();
 
