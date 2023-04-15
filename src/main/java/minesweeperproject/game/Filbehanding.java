@@ -41,7 +41,7 @@ public class Filbehanding {
     }
 
     /**
-     * Writes spesific information to file. It overwrites the information that was
+     * Writes specific information to file. It overwrites the information that was
      * already there
      *
      * @param path   The path to the file it is supposed to write to

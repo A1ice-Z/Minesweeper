@@ -26,12 +26,16 @@ public class Minesweeper {
      * @param columns    The amount of columns this games grid has
      * @param totalMines The amount of bombs there exists in the grid
      * @throws IllegalArgumentException If rows, columns or toltalmines is equal or
-     *                                  lower than 0
+     *                                  lower than 0. Or if there are mines equal to
+     *                                  or more than the amount of cells in the grid
      */
     public Minesweeper(int rows, int columns, int totalMines) {
         if (totalMines <= 0 || rows <= 0 || columns <= 0) {
             throw new IllegalArgumentException(
                     "Man kan ikke sette antall rows, columns eller toltalMines lik eller mindre enn 0");
+        }
+        if (totalMines >= rows * columns) {
+            throw new IllegalArgumentException("For mange miner");
         }
         this.totalMines = totalMines;
         playingGrid = new GridImpl(rows, columns);
@@ -47,13 +51,10 @@ public class Minesweeper {
      * 
      * @param row    The row of the cell the player clicked
      * @param column The column of the cell the player clicked
-     * @throws IllegalArgumentException If the cells cordinates is out of bounds
      */
     public void onFirstClick(int row, int column) {
-        if (row < 0 || column < 0) {
-            throw new IllegalArgumentException("Kordinatene til cellen kan ikke være mindre enn 0");
-        }
-        generateMines(totalMines, row, column);
+        validateCell(row, column);
+        generateMines(row, column);
         setNumbers();
         unopenedCells.remove(playingGrid.getElement(row, column));
         onClick(row, column);
@@ -62,19 +63,13 @@ public class Minesweeper {
     /**
      * Distributes the amount of bombs a game has randomly on the games grid
      * 
-     * @param totalMines      The amount of bombs there exists in the grid
-     * @param firstCellRow    The x cordinates to the first cell that is clicked on
+     * @param firstCellRow    The y cordinates to the first cell that is clicked on
      *                        when the game starts
-     * @param firstCellColumn The y cordinates to the first cell that is clicked on
+     * @param firstCellColumn The x cordinates to the first cell that is clicked on
      *                        when the game starts
-     * @throws IllegalArgumentException If the cells cordinates and totalMines is
-     *                                  less than 0
      */
-    public void generateMines(int totalMines, int firstCellRow, int firstCellColumn) {
-        if (firstCellColumn < 0 || firstCellRow < 0 || totalMines < 0) {
-            throw new IllegalArgumentException(
-                    "Totalmines og kordinatene til den første cellene kan ikke være mindre enn 0");
-        }
+    public void generateMines(int firstCellRow, int firstCellColumn) {
+        validateCell(firstCellRow, firstCellColumn);
         HashSet<String> setOfMines = new HashSet<>();
         while (setOfMines.size() != totalMines) {
             int row = new Random().nextInt(playingGrid.getRowCount());
@@ -112,23 +107,20 @@ public class Minesweeper {
     }
 
     /**
-     * First it checks the status of the cell, and based on that it checkes
-     * if the cell is a bombcell
+     * If the cell is openable, checks is it is a bomb or numbercell. If its a bomb
+     * its game over, if its a numbercell that cell gets opened. If the numbercell
+     * is 0, the 8 cells around are also opened.
      * 
-     * @param row    The x cordinate for the cell
-     * @param column The y cordinate for the cell
-     * @throws IllegalArgumentException If the cells cordinates is out of bounds
+     * @param row    The y cordinate for the cell
+     * @param column The x cordinate for the cell
      */
     public void onClick(int row, int column) {
-        if (row < 0 || column < 0) {
-            throw new IllegalArgumentException("Kordinatene til cellen kan ikke være mindre enn 0");
-        }
+        validateCell(row, column);
 
         Cell clickedCell = playingGrid.getElement(row, column);
 
         if (clickedCell.isFlagged() || clickedCell.isOpen())
             return;
-        // if venstreclick
         if (clickedCell.display() == -1) {
             gameLost = true;
         } else {
@@ -145,11 +137,9 @@ public class Minesweeper {
                 }
             }
         }
-        // primary= venstre click and secondary = høyre click button? sjekke for det
     }
 
     /**
-     * Return the current Minesweeper games amount of unopened cells
      * 
      * @return The current Minesweeper games amount of unopened cells
      */
@@ -158,7 +148,6 @@ public class Minesweeper {
     }
 
     /**
-     * Return the current Minesweeper games grid
      * 
      * @return The current Minesweeper games grid
      */
@@ -167,12 +156,27 @@ public class Minesweeper {
     }
 
     /**
-     * Return the current Minesweeper games status
      * 
      * @return The current Minesweeper games status
      */
     public boolean isGameLost() {
         return gameLost;
+    }
+
+    /**
+     * 
+     * @param row    the y coordinate of the cell
+     * @param column the x coordinate of the cell
+     * 
+     * @throws IllegalArgumentException if the cell is invalid
+     */
+    public void validateCell(int row, int column) {
+        if (row < 0 || column < 0) {
+            throw new IllegalArgumentException("Kordinatene til cellen kan ikke være mindre enn 0");
+        }
+        if (row >= playingGrid.getRowCount() || column >= playingGrid.getColumnCount()) {
+            throw new IllegalArgumentException("Koordinatene er utenfor grid");
+        }
     }
 
     public static void main(String[] args) {

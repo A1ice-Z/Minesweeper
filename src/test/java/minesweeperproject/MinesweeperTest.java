@@ -32,6 +32,12 @@ public class MinesweeperTest {
         assertThrows(IllegalArgumentException.class, () -> {
             new Minesweeper(0, 0, 0);
         }, "Antall rows, columns eller toltalMines lik eller mindre enn 0");
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Minesweeper(5, 5, 25);
+        }, "For mange miner");
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Minesweeper(5, 5, 26);
+        }, "For mange miner");
     }
 
     @Nested
@@ -74,18 +80,14 @@ public class MinesweeperTest {
         @Test
         @DisplayName("Tester for ugyldige verdier når man skal generere miner")
         public void testInnvalidGenerateMines() {
+
             assertThrows(IllegalArgumentException.class, () -> {
-                game.generateMines(-1, 0, 0);
+                game.generateMines(-5, 0);
                 ;
                 ;
             }, "Totalmines og kordinatene til den første cellene kan ikke være mindre enn 0");
             assertThrows(IllegalArgumentException.class, () -> {
-                game.generateMines(2, -5, 0);
-                ;
-                ;
-            }, "Totalmines og kordinatene til den første cellene kan ikke være mindre enn 0");
-            assertThrows(IllegalArgumentException.class, () -> {
-                game.generateMines(-1, 0, -1);
+                game.generateMines(0, -1);
                 ;
                 ;
             }, "Totalmines og kordinatene til den første cellene kan ikke være mindre enn 0");
@@ -95,7 +97,7 @@ public class MinesweeperTest {
         public class voidClassesTest {
             @BeforeEach
             public void generateMinesSetUp() {
-                game.generateMines(5, 0, 0);
+                game.generateMines(0, 0);
                 game.setNumbers();
             }
 

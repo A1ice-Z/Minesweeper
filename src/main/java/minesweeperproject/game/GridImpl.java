@@ -18,6 +18,7 @@ public class GridImpl implements IGrid {
      * @param rows    The amount of rows the Grid is gonna have
      * @param columms Thes columns of rows the Grid is gonna have
      * @throws IllegalArgumentException If the row or column is invalid
+     * 
      */
 
     public GridImpl(int rows, int columns) {
@@ -37,6 +38,7 @@ public class GridImpl implements IGrid {
         return grid.size();
     }
 
+    
     @Override
     public int getColumnCount() {
         return grid.get(0).size();

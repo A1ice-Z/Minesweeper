@@ -1,7 +1,7 @@
 package minesweeperproject.game.celler;
 
 /**
- * Abstract class that contains the generall data a cell needs
+ * Abstract class that contains the general data a cell needs
  */
 
 public abstract class Cell {
@@ -11,11 +11,11 @@ public abstract class Cell {
     private int column;
 
     /**
-     * Creates a new cell places on the cordinates (row, column)
+     * Creates a new cell on the specified coordinates (row, column)
      * 
-     * @param row    The y cordinate for the cell
-     * @param column The x cordinate for the cell
-     * @throws IllegalArgumentException if the cells cordinates are negativ
+     * @param row    The y coordinate for the cell
+     * @param column The x coordinate for the cell
+     * @throws IllegalArgumentException if the cells coordinates are negative
      */
     public Cell(int row, int column) {
         if (row < 0 || column < 0) {
@@ -26,7 +26,6 @@ public abstract class Cell {
     }
 
     /**
-     * Returns if the cell is open
      * 
      * @return If the cell is open
      */
@@ -35,7 +34,6 @@ public abstract class Cell {
     }
 
     /**
-     * Returns if the cell is flagged
      * 
      * @return If the cell is flagged
      */
@@ -48,7 +46,6 @@ public abstract class Cell {
     }
 
     /**
-     * Returns the cells row
      * 
      * @return The cells row
      */
@@ -57,7 +54,6 @@ public abstract class Cell {
     }
 
     /**
-     * Returns the cells column
      * 
      * @return The cells column
      */
@@ -66,7 +62,7 @@ public abstract class Cell {
     }
 
     /**
-     * Returns the value of the cell which is to be displayed. Differs for bombs and
+     * Returns the value of the cell which is to be displayed. Differs between bombs and
      * cells
      * 
      * @return Integer
@@ -79,8 +75,4 @@ public abstract class Cell {
     public void open() {
         open = true;
     };
-
-    public static void main(String[] args) {
-        System.out.println();
-    }
 }
